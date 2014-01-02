@@ -1,9 +1,12 @@
-module.exports = function(app) {
-	var _ = require('underscore');
-  var waterfall = require('async').waterfall;
-  var sql       = require('../sql');
+function routes(app) {
+  app.get('/', function(req, res){
+    res.render('index',
+    {
+      title: 'LeagueBook'
+    });
+  });
 
-	app.get('/', function(req, res) {
-    res.send(200);
-	});
-};
+  //require('./registration')(app);
+}
+
+module.exports = routes;
