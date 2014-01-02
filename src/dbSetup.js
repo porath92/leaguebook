@@ -18,9 +18,11 @@ CREATE SEQUENCE user_id_seq \
   START WITH 1; \
 \
 CREATE TABLE users ( \
-  user_id    numeric NOT NULL PRIMARY KEY DEFAULT nextval('user_id_seq'), \
-  college_id numeric, \
-  email      varchar(50) NOT NULL \
+  user_id         numeric NOT NULL PRIMARY KEY DEFAULT nextval('user_id_seq'), \
+  college_id      numeric, \
+  email           varchar(50) NOT NULL, \
+  confirmation_id uuid NOT NULL, \
+  create_date     date NOT NULL DEFAULT now() \
 ); \
 CREATE SEQUENCE college_id_seq \
   INCREMENT BY 1 \
@@ -31,7 +33,8 @@ CREATE SEQUENCE college_id_seq \
 CREATE TABLE college ( \
   college_id numeric NOT NULL PRIMARY KEY DEFAULT nextval('college_id_seq'), \
   name       varchar NOT NULL, \
-  size       varchar(20) NOT NULL, \
+  size       varchar(20), \
+  state      varchar(20) NOT NULL, \
   unitid     numeric(10) NOT NULL \
 ); \
 \

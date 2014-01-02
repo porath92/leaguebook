@@ -1,4 +1,5 @@
 var quote = function (str) {
+  str = str.replace("'", "''");
   return "'" + str + "'";
 }
 
@@ -65,6 +66,15 @@ module.exports.insert = function (table, pairs, returnColumn) {
   }
 
   console.log(query);
+  return query;
+}
+
+module.exports.insertMulti = function (table, rows, returnColumn) {
+  var query = '';
+  for (var x = 0; x < rows.length; x++) {
+    query += module.exports.insert(table, rows[x], returnColumn);
+  }
+
   return query;
 }
 
