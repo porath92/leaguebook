@@ -1,4 +1,5 @@
-module.export = {
+var nodemailer = require('nodemailer');
+module.exports = {
 	sendConfirmation: function(email, returnURL) {
 		var smtpTransport = nodemailer.createTransport("SMTP",{
 	    service: "Gmail",
@@ -10,7 +11,7 @@ module.export = {
 
 		var mailOptions = {
 	    from: "LeagueBook Confirmation <no-reply@leaguebook.herokuapp.com>",
-	    to: userEmail,
+	    to: email,
 	    subject: "LeagueBook: Please confirm your email address.",
 	    text: "Please confirm that this is indeed your email by clicking,",
 	    html: "<a href='" + returnURL + "'>THIS LINK</a>"

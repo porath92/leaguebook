@@ -1,9 +1,9 @@
 module.exports = function(app) {
-	var _ 					= require('underscore'),
-			nodemailer 	= require('nodemailer'),
-			uuid 				= require('node-uuid'),
-			validator 	= require('../helpers/validator'),
-			emailer 		= require('../helpers/email');
+	var _ 				= require('underscore'),
+			uuid 			= require('node-uuid'),
+			validator = require('../helpers/validator'),
+			emailer 	= require('../helpers/email'),
+			config 		= require('../config').configData;
 
 	app.post('/enroll', function(req, res) {
 		var user   = req.body.summoner,
@@ -13,10 +13,12 @@ module.exports = function(app) {
 		if(validator.validateRegistration(user, email, school)) {
 			var confirmId = uuid.v1();
 			//TODO: Save user in database
-			var returnURL = "leaguebook.herokuapp.com/confirm/" + user + "/" + confirmId;
+			var returnURL = config.URL = "/confirm/" + user + "/" + confirmId;
 			emailer.sendConfirmation(email, returnURL);
 		}
-		res.redirect('leaguebook.herokuapp.com/?r=1');
+
+		var registeredURL = config.URL + '/?r=1';
+		res.redirect(registeredURL);
 	});
 
 	app.get('/confirm/:user/:confirmId', function(req, res) {
