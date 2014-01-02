@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Summoners from {{school}}</h2>
+
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <td>Rank</td>
+        <td>College or University</td>
+        <td>&nbsp;</td>
+      </tr>
+    </thead>
+    <tbody>
+      {{#summoners}}
+      <tr>
+        <td>#{{rank}}</td>
+        <td>{{summoner}}</td>
+        <td><a href="http://lolking.net" class="btn btn-info">View LoLKing Profile</a></td>
+      </tr>
+      {{/summoners}}
+    </tbody>
+  </table>
+</div>
