@@ -6,7 +6,7 @@ module.exports = function(app) {
 			config 		= require('../config').configData;
 
 	app.post('/enroll', function(req, res) {
-    var psql = require('../helpers/db');
+    var psql = app.psql;
     var sql  = require('../sql');
 
 		var user   = req.body.summoner,

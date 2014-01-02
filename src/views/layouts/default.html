@@ -58,10 +58,9 @@
           </div>
           <div class="form-group">
             <select name="school" class="form-control">
-              <option selected="selected" disabled="disabled">School</option>
-              <option>University of Being a Motherfuckin' Sorcerer</option>
-              <option>College of Saint Rose</option>
-              <option>Harvard University</option>
+              {{#colleges}}
+                <option value="{{college_id}}">{{name}}</option>
+              {{/colleges}}
             </select>
           </div>
           <button type="submit" class="btn btn-success">Enroll Now!</button>

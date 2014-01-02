@@ -27,12 +27,17 @@ app.use(express.logger('dev')); // TODO configure me from config object
 app.use(express.methodOverride()); // Allow requests to set request method as param
 app.use(app.router); // Got through all that? Neat. Hit the app.
 
-require('./routes')(app);
+require('./helpers/db').connect(function (psql) {
+  app.psql = psql;
+  app.sql  = require('./sql');
 
-var port = process.env.PORT || 3000;
-
-http.createServer(app).listen(port, function() {
+  require('./routes')(app);
+  
+  var port = process.env.PORT || 3000;
+  
+  http.createServer(app).listen(port, function() {
     console.log('Listening on port ' + port);
+  });
+  
+  module.exports = app;
 });
-
-module.exports = app;
