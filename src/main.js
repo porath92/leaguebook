@@ -1,23 +1,31 @@
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var engines = require('consolidate');
-var viewsBase = path.join(__dirname, 'views');
-var riotAPI = require('./helpers/riot_api');
-var app = express();
+// Top-level dependencies
+var express             = require('express'),
+    http                = require('http'),
+    path                = require('path'),
+    hogan               = require('hogan-express'),
+    riotAPI             = require('./helpers/riot_api');
+    // APPLICATION
+    app                 = express();
+// Get view engine config
+var viewEngine = 'html',
+    viewsBase = path.join(__dirname, 'views'),
+    layoutDefault = path.join(viewsBase, 'layouts', 'default.html');
 
-//view engine
+// Configure view engine
 app.set('views', viewsBase);
-app.set('view engine', 'html');
-app.set("view options", { layout: true });
-app.engine('.html', engines.handlebars);
+app.set('layout', layoutDefault);
+app.set('view engine', viewEngine);
+app.engine('html', hogan);
 
-//middleware
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(riotAPI);
-app.use(express.favicon());
-app.use(express.methodOverride()); 
-app.use(app.router); 
+// Layer up the middleware
+app.use(express.static(path.join(__dirname, 'public'))); // Public folder first, before constraint middleware
+app.use(express.cookieParser()); // Parse cookies to object
+app.use(express.bodyParser()); // Parse form params to object
+
+app.use(express.favicon()); // derp
+app.use(express.logger('dev')); // TODO configure me from config object
+app.use(express.methodOverride()); // Allow requests to set request method as param
+app.use(app.router); // Got through all that? Neat. Hit the app.
 
 require('./routes')(app);
 
