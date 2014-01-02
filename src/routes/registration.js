@@ -11,8 +11,6 @@ module.exports = function(app) {
 				school = req.body.school;
 
 		if(validator.validateRegistration(user, email, school)) {
-			res.send(404);
-		}else {
 			var confirmId = uuid.v1();
 			//TODO: Save user in database
 			var returnURL = "leaguebook.herokuapp.com/confirm/" + user + "/" + confirmId;
