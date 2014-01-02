@@ -1,0 +1,28 @@
+module.export = {
+	sendConfirmation: function(email, returnURL) {
+		var smtpTransport = nodemailer.createTransport("SMTP",{
+	    service: "Gmail",
+	    auth: {
+        user: "leagueoflegendsbook@gmail.com",
+        pass: "MagicKittens"
+	    }
+		});
+
+		var mailOptions = {
+	    from: "LeagueBook Confirmation <no-reply@leaguebook.herokuapp.com>",
+	    to: userEmail,
+	    subject: "LeagueBook: Please confirm your email address.",
+	    text: "Please confirm that this is indeed your email by clicking,",
+	    html: "<a href='" + returnURL + "'>THIS LINK</a>"
+		}
+
+		smtpTransport.sendMail(mailOptions, function(error, response){
+	    if(error){
+	        console.log(error);
+	    }else{
+	        console.log("Message sent: " + response.message);
+	    }
+	    smtpTransport.close();
+		});
+	}
+}
