@@ -14,7 +14,7 @@ module.exports = {
 	    to: email,
 	    subject: "LeagueBook: Please confirm your email address.",
 	    text: "",
-	    html: "Please confirm that this is indeed you!<a href='" + returnURL + "'>THIS LINK</a>"
+	    html: "Please confirm that this is indeed you! <a href='" + returnURL + "'>THIS LINK</a>"
 		}
 
 		smtpTransport.sendMail(mailOptions, function(error, response){

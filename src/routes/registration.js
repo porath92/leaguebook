@@ -21,12 +21,11 @@ module.exports = function(app) {
           'name'            : user,
           'confirmation_id' : confirmId
         }), function (err, res) {
-			    var returnURL = config.baseURL = "/confirm/" + user + "/" + confirmId;
+			    var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
 			    emailer.sendConfirmation(email, returnURL);
         }
       );
 		}
-
 		var registeredURL = config.baseURL + '/?r=1';
 		res.redirect(registeredURL);
 	});
@@ -45,6 +44,5 @@ module.exports = function(app) {
         }
       }
     );
-		//remove confirm id from user if it exists
 	});
 }
