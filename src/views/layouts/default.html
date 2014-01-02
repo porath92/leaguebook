@@ -33,6 +33,14 @@
           </button>
           <a class="navbar-brand" href="#">LeagueBook</a>
         </div>
+        <div class="navbar-collapse collapse">
+          <form method="get" action="/search" class="navbar-form navbar-right" role="form">
+            <div class="form-group">
+              <input type="text"  placeholder="School or Summoner" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+        </div><!--/.navbar-collapse -->
       </div>
     </div>
 
@@ -43,24 +51,22 @@
         <p>Enroll now to see how you rank amongst all the colleges and universities in the country!</p>
         <form method="post" action="/enroll" class="form-inline" role="form">
           <div class="form-group">
-            <input type="text" placeholder="School Email" class="form-control">
+            <input type="text" name="summoner" placeholder="Summoner Name" class="form-control">
           </div>
           <div class="form-group">
-            <input type="text" placeholder="Summoner Name" class="form-control">
+            <input type="text" name="email" placeholder="School Email *" class="form-control">
           </div>
           <div class="form-group">
-            <select class="form-control">
+            <select name="school" class="form-control">
               <option selected="selected" disabled="disabled">School</option>
               <option>University of Being a Motherfuckin' Sorcerer</option>
               <option>College of Saint Rose</option>
               <option>Harvard University</option>
             </select>
           </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" class="form-control">
-          </div>
           <button type="submit" class="btn btn-success">Enroll Now!</button>
         </form>
+        <p class="text-muted"><small>* Only .edu email addresses are allowed to enroll.</small></p>
       </div>
     </div>
 
