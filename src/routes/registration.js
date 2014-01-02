@@ -5,7 +5,7 @@ module.exports = function(app) {
 			validator 	= require('../helpers/validator'),
 			emailer 		= require('../helpers/email');
 
-	app.post('/register', function(req, res) {
+	app.post('/enroll', function(req, res) {
 		var user   = req.body.summoner,
 				email  = req.body.email,
 				school = req.body.school;
