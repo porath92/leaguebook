@@ -13,8 +13,8 @@ module.exports = {
 	    from: "LeagueBook Confirmation <no-reply@leaguebook.herokuapp.com>",
 	    to: email,
 	    subject: "LeagueBook: Please confirm your email address.",
-	    text: "Please confirm that this is indeed your email by clicking,",
-	    html: "<a href='" + returnURL + "'>THIS LINK</a>"
+	    text: "",
+	    html: "Please confirm that this is indeed you!<a href='" + returnURL + "'>THIS LINK</a>"
 		}
 
 		smtpTransport.sendMail(mailOptions, function(error, response){

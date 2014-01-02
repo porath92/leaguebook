@@ -13,11 +13,11 @@ module.exports = function(app) {
 		if(validator.validateRegistration(user, email, school)) {
 			var confirmId = uuid.v1();
 			//TODO: Save user in database
-			var returnURL = config.URL = "/confirm/" + user + "/" + confirmId;
+			var returnURL = config.baseURL = "/confirm/" + user + "/" + confirmId;
 			emailer.sendConfirmation(email, returnURL);
 		}
 
-		var registeredURL = config.URL + '/?r=1';
+		var registeredURL = config.baseURL + '/?r=1';
 		res.redirect(registeredURL);
 	});
 
