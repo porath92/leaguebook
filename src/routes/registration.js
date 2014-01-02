@@ -6,10 +6,10 @@ module.exports = function(app) {
 			emailer 		= require('../helpers/email');
 
 	app.post('/register', function(req, res) {
-		var user   = req.body.summoner,
-				email  = req.body.email,
+		var user = req.body.summoner,
+				email = req.body.email,
 				school = req.body.school;
-				
+
 		if(validator.validateRegistration(user, email, school)) {
 			res.send(404);
 		}else {
