@@ -21,6 +21,7 @@ CREATE TABLE users ( \
   user_id         numeric NOT NULL PRIMARY KEY DEFAULT nextval('user_id_seq'), \
   college_id      numeric, \
   email           varchar(50) NOT NULL, \
+  name            varchar NOT NULL, \
   confirmation_id uuid NOT NULL, \
   create_date     date NOT NULL DEFAULT now() \
 ); \

@@ -6,15 +6,25 @@ module.exports = function(app) {
 			config 		= require('../config').configData;
 
 	app.post('/enroll', function(req, res) {
+    var psql = require('../helpers/db');
+    var sql  = require('../sql');
+
 		var user   = req.body.summoner,
 				email  = req.body.email,
 				school = req.body.school;
 
 		if(validator.validateRegistration(user, email, school)) {
 			var confirmId = uuid.v1();
-			//TODO: Save user in database
-			var returnURL = config.baseURL = "/confirm/" + user + "/" + confirmId;
-			emailer.sendConfirmation(email, returnURL);
+      psql.query(sql.insert('users', {
+          'email'           : email,
+          'college_id'      : school,
+          'name'            : user,
+          'confirmation_id' : confirmId
+        }), function (err, res) {
+			    var returnURL = config.baseURL = "/confirm/" + user + "/" + confirmId;
+			    emailer.sendConfirmation(email, returnURL);
+        }
+      );
 		}
 
 		var registeredURL = config.baseURL + '/?r=1';
@@ -22,7 +32,19 @@ module.exports = function(app) {
 	});
 
 	app.get('/confirm/:user/:confirmId', function(req, res) {
-		//pull user info and check for the confirm id
+    app.psql.query(app.sql('update', 'users', {
+        'confirmation_id' : ''
+      }, {
+        'name' : user,
+        'confirmation_id' : confirmId
+      }), function (err) {
+        if (!err) {
+          res.redirect(config.baseURL);
+        } else {
+          console.log(err);
+        }
+      }
+    );
 		//remove confirm id from user if it exists
 	});
 }
