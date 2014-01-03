@@ -14,12 +14,12 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/school/:id', function(req, res) {
+  app.get('/schools/:school', function(req, res) {
     app.psql.query(app.sql.select(
       ['name', 'college_id', 'size', 'state'],
       'college',
       { 
-        college_id: req.params.id
+        slug: req.params.school
       }
     ), function(err, data) {
       var school = data.rows[0];
