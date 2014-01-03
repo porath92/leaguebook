@@ -29,12 +29,14 @@ app.use(app.router); // Got through all that? Neat. Hit the app.
 
 // Handle 404
 app.use(function(req, res) {
-   res.send('404: Page not Found', 404);
+  res.status(404);
+  res.render('404', {title: '404: File Not Found'});
 });
 
 // Handle 500
 app.use(function(error, req, res, next) {
-   res.send('500: Internal Server Error', 500);
+  res.status(500);
+  res.render('500', {title:'500: Internal Server Error', error: error});
 });
 
 require('./helpers/db').connect(function (psql) {
