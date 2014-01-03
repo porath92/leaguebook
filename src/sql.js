@@ -153,9 +153,6 @@ module.exports.getColleges = function () {
 }
 
 module.exports.getUsers = function (college_id) {
-  var query = module.exports.select('*', 'users', {
-    'college_id' : college_id
-  });
-
+  var query = 'SELECT * FROM users WHERE college_id = ' + college_id + ' ORDER BY rank DESC;';
   return query;
 }
