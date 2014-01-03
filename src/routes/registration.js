@@ -6,12 +6,12 @@ module.exports = function(app) {
 			config 		= require('../config').configData;
 
 	app.post('/enroll', function(req, res) {
-    var psql = app.psql;
-    var sql  = require('../sql');
-
-		var user   = req.body.summoner,
-				email  = req.body.email,
-				college_id = req.body.college_id;
+		var user          = req.body.summoner,
+				email         = req.body.email,
+				college_id    = req.body.college_id,
+        registeredURL = config.baseURL,
+        sql           = require('../sql'),
+        psql          = app.psql;
 
 		if(validator.validateRegistration(user, email, college_id)) {
 			var confirmId = uuid.v1();
@@ -25,8 +25,10 @@ module.exports = function(app) {
 			    emailer.sendConfirmation(email, returnURL);
         }
       );
-		}
-		var registeredURL = config.baseURL + '/?r=1';
+      registeredURL = registeredURL + '/?r=1';
+		}else {
+      registeredURL = registeredURL + '/?r=0';
+    }
 		res.redirect(registeredURL);
 	});
 
