@@ -21,10 +21,18 @@ module.exports = function(app) {
       var school = data.rows[0];
       if(!_.isEmpty(school)) {
         app.psql.query(app.sql.getUsers(school.college_id), function(err, result) {
+          var summoners = [];
+
+          if (err) {
+            console.log(err);
+          } else {
+            summoners = results.rows;
+          }
+
           res.render('school',
           {
             school: school,
-            summoners: result.rows
+            summoners: summoners
           });
         });
       }
