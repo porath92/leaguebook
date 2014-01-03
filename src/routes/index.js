@@ -20,7 +20,6 @@ function routes(app) {
     ];
     var champion = champions[Math.floor(Math.random() * champions.length)];
     var alertMsg, alertType;
-    console.log('r is ' + req.query.r);
     switch(req.query.r) {
       case '0':
         alertMsg = "Error processing email, see Doctor Mundo if problem persists.";
@@ -35,8 +34,6 @@ function routes(app) {
         alertType = "alert-success";
         break;
     }
-    console.log('alertType is ');
-    console.log(alertType);
     res.render('index',
     {
       champion    : champion,

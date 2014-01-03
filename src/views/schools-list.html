@@ -4,7 +4,6 @@
   <table class="table table-condensed table-striped">
     <thead>
       <tr>
-        <td>Rank</td>
         <td>College or University</td>
         <td># of Summoners</td>
       </tr>
@@ -12,10 +11,9 @@
     <tbody>
       {{#schools}}
       <tr>
-        <td>#{{rank}}</td>
         <td>{{name}}</td>
         <td>{{summoner_count}}</td>
-        <td><a href="/schools/{{slug}}" class="btn btn-info">View All Summoners</a></td>
+        <td><a href="/school/{{college_id}}" class="btn btn-info">View All Summoners</a></td>
       </tr>
       {{/schools}}
     </tbody>

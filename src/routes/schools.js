@@ -1,21 +1,20 @@
 var _ = require('underscore');
 
 module.exports = function(app) {
-
   app.get('/schools', function(req, res) {
-
-    app.psql.query('SELECT name, slug FROM college ORDER BY name', function (err, data) {
-
-      res.render('schools-index',
-      {
-        schools: data.rows
-      });
+    app.psql.query(app.sql.select(['name', 'college_id'], 'college', "LOWER(name) LIKE LOWER('%" + req.query.search + "%')"), function (err, data) {
+      if(data.rows.length == 1) {
+        res.redirect('/school/' + data.rows[0].college_id);
+      }else {
+        res.render('schools-list',
+        {
+          schools: data.rows
+        });
+      }
     });
-
   });
 
-  app.get('/schools/:school', function(req, res) {
-
+  app.get('/school/:id', function(req, res) {
     var summoners = [
       {
         rank: 1,
@@ -27,11 +26,22 @@ module.exports = function(app) {
       }
     ];
 
-    res.render('schools-show',
-    {
-      school: 'College of Saint Rose',
-      summoners: summoners
+    app.psql.query(app.sql.select(
+      ['name', 'college_id', 'size', 'state'],
+      'college',
+      { 
+        college_id: req.params.id
+      }
+    ), function(err, data) {
+      var school = data.rows[0];
+      if(!_.isEmpty(school)) {
+        //get members
+        res.render('school',
+        {
+          school: data.rows[0],
+          summoners: summoners
+        });
+      }
     });
-
   });
 };
