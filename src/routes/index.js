@@ -50,6 +50,7 @@ function routes(app) {
   require('./ajax')(app);
   require('./registration')(app);
   require('./schools')(app);
+  require('./search')(app);
 }
 
 module.exports = routes;

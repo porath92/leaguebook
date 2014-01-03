@@ -26,37 +26,6 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-
-    <script>
-    $(function(){
-      $( "#search" ).autocomplete({
-        source: function( request, response ) {
-          $.ajax({
-            url: "{{baseUrl}}/ajax/schools",
-            data: {
-              maxRows: 5,
-              name: request.term
-            },
-            success: function( data ) {
-              response( $.map( data, function( item ) {
-                return {
-                  slug: item.slug,
-                  label: item.name,
-                  value: item.name
-                }
-              }));
-            }
-          });
-        },
-        minLength: 2,
-        select: function( event, ui ) {
-          location.href = '/schools/' + ui.item.slug;
-        }
-      });
-    });
-    </script>
   </head>
 
   <body>
@@ -73,10 +42,11 @@
           <a class="navbar-brand" href="/">LeagueBook</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form method="get" action="/schools" class="navbar-form navbar-right" role="form">
+          <form method="get" action="/search" class="navbar-form navbar-right" role="form">
             <div id="search-box" class="form-group">
-              <input type="text"  id="search" name="search" placeholder="Find School" class="form-control">
+              <input type="text" id="keyword" name="keyword" placeholder="Find School" class="form-control">
             </div>
+            <button type="submit" class="btn btn-success">Search</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -88,7 +58,7 @@
       <hr>
 
       <footer>
-        <p>&copy; MadGlory Interactive 2013</p>
+        <p>&copy; MadGlory Interactive 2014</p>
       </footer>
     </div>
   </body>
