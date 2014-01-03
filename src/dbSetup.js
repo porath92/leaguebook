@@ -34,6 +34,7 @@ CREATE SEQUENCE college_id_seq \
 CREATE TABLE college ( \
   college_id numeric NOT NULL PRIMARY KEY DEFAULT nextval('college_id_seq'), \
   name       varchar NOT NULL, \
+  slug       varchar NOT NULL, \
   size       varchar(20), \
   state      varchar(20) NOT NULL, \
   unitid     numeric(10) NOT NULL \

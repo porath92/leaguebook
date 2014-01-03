@@ -15,14 +15,18 @@ waterfall([
     csv()
       .from.path(csvPath)
       .to.array(function (data) {
-        var map  = {'name' : 1, 'unitid' : 0, 'state' : 4};
+        var map  = {'name' : 1, 'unitid' : 0, 'state' : 4, 'slug' : 0};
         var rows = [];
 
         for (var x = 1; x < data.length; x++) {
           var row = {};
 
           for (var col in map) {
-            row[col] = data[x][map[col]];
+            if(col == 'slug'){
+              row[col] = data[x][map['name']].toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'')
+            }else{
+              row[col] = data[x][map[col]];
+            }
           }
 
           rows.push(row);
