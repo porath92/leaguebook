@@ -1,6 +1,10 @@
 var quote = function (str) {
-  str = str.replace("'", "''");
-  return "'" + str + "'";
+  if (str) {
+    str = str.replace("'", "''");
+    return "'" + str + "'";
+  } else {
+    str = 'null';
+  }
 }
 
 var buildWhere = function (where, operator) {
