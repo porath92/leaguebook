@@ -22,7 +22,7 @@ CREATE TABLE users ( \
   college_id      numeric, \
   email           varchar(50) NOT NULL, \
   name            varchar NOT NULL, \
-  confirmation_id uuid NOT NULL, \
+  confirmation_id uuid, \
   create_date     date NOT NULL DEFAULT now() \
 ); \
 CREATE SEQUENCE college_id_seq \
