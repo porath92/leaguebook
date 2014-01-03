@@ -3,7 +3,7 @@ var quote = function (str) {
     str = str.replace("'", "''");
     return "'" + str + "'";
   } else {
-    str = 'null';
+    return 'null';
   }
 }
 
