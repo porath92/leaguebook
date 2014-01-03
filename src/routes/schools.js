@@ -2,15 +2,11 @@ var _ = require('underscore');
 
 module.exports = function(app) {
   app.get('/schools', function(req, res) {
-    app.psql.query(app.sql.select(['name', 'college_id'], 'college', "LOWER(name) LIKE LOWER('%" + req.query.search + "%')"), function (err, data) {
-      if(data.rows.length == 1) {
-        res.redirect('/school/' + data.rows[0].college_id);
-      }else {
-        res.render('schools-list',
-        {
-          schools: data.rows
-        });
-      }
+    app.psql.query('SELECT * FROM college ORDER BY name LIMIT 10', function (err, data) {
+      res.render('schools-list',
+      {
+        schools: data.rows
+      });
     });
   });
 
