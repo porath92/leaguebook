@@ -11,12 +11,8 @@
         <input type="text" name="email" placeholder="School Email *" class="form-control">
       </div>
       <div class="form-group">
-        <select name="school" class="form-control">
-          <option selected="selected" disabled="disabled">School</option>
-          <option>University of Being a Motherfuckin' Sorcerer</option>
-          <option>College of Saint Rose</option>
-          <option>Harvard University</option>
-        </select>
+        <input type="hidden" name="college_id" id="college_id">
+        <input type="text" name="school" id="school" placeholder="School" class="form-control">
       </div>
       <button type="submit" class="btn btn-success">Enroll Now!</button>
     </form>
@@ -56,3 +52,35 @@
     </div>
   </div>
 </div>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script>
+  $(function(){
+
+    $( "#school" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "http://localhost:3000/ajax/schools",
+          data: {
+            maxRows: 5,
+            name: request.term
+          },
+          success: function( data ) {
+            response( $.map( data, function( item ) {
+              return {
+                id: item.college_id,
+                label: item.name,
+                value: item.name
+              }
+            }));
+          }
+        });
+      },
+      minLength: 2,
+      select: function( event, ui ) {
+        $('#college_id').val(ui.item.id);
+      }
+    });
+  });
+</script>

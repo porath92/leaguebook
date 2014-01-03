@@ -11,13 +11,13 @@ module.exports = function(app) {
 
 		var user   = req.body.summoner,
 				email  = req.body.email,
-				school = req.body.school;
+				college_id = req.body.college_id;
 
-		if(validator.validateRegistration(user, email, school)) {
+		if(validator.validateRegistration(user, email, college_id)) {
 			var confirmId = uuid.v1();
       psql.query(sql.insert('users', {
           'email'           : email,
-          'college_id'      : school,
+          'college_id'      : college_id,
           'name'            : user,
           'confirmation_id' : confirmId
         }), function (err, res) {
