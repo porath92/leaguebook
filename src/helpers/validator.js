@@ -3,7 +3,7 @@ var RiotAPI = require('riot-api');
 var api = new RiotAPI('47319b52-dccf-41f9-a4dd-1b594255f0e6');
 module.exports = {
 	validateEmail: function(email) {
-		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.[Ee][Dd][Uu]$/;
+		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([Ee][Dd][Uu])|(madglory.com)|(madgloryint.com)|(riotgames.com)$/;
 		return reg.test(email);
 	},
 

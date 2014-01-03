@@ -16,7 +16,7 @@
       </div>
       <button type="submit" class="btn btn-success">Enroll Now!</button>
     </form>
-    <p><small>* Only .edu email addresses are allowed to enroll.</small></p>
+    <p><small>* NA region with .edu email addresses are allowed to enroll.</small></p>
     <div class="alert {{alertType}}">  
       <a class="close" data-dismiss="alert">×</a>
       {{alertMsg}} 
@@ -31,9 +31,9 @@
       <div class="col-md-4">
         <h2>{{name}}</h2>
         <ol>
-          <li><a href="#">Shockem</a></li>
-          <li><a href="#">MadGlory</a></li>
-          <li><a href="#">ClayBot9000</a></li>
+          {{#users}}
+            <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon{{profile_icon_id}}.jpg" class="profile-icon" /> {{name}}</li>
+          {{/users}}
         </ol>
         <p><a class="btn btn-default" href="/schools/{{slug}}" role="button">View all &raquo;</a></p>
       </div>
