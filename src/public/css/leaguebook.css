@@ -4,6 +4,9 @@ body {
 
 .jumbotron {
   padding-top: 0;
+  color: #fff;
+  background: #eeeeee url(http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Jinx_0.jpg) no-repeat 0 0;
+  background-size: cover;
 }
 
 .form-inline .form-group {
