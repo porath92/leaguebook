@@ -42,8 +42,9 @@ body {
 }
 
 #main-logo {
-  width: 35%;
-  margin-top: 5px;
+  position: absolute;
+  padding-top: 5px;
+  width: 170px;
 }
 
 #error-404 {
