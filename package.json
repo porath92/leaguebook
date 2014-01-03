@@ -17,6 +17,6 @@
     "node-uuid": "~1.4.1",
     "handlebars": "~1.3.0",
     "csv": "0.3.6",
-    "riot-api": "~0.1.0"
+    "riot-api": "git+https://cforbes:2ec02eaaae5d6bd63e3234004f5169a5b0f77ef0@github.com/madgloryint/riot-api.git"
   }
 }

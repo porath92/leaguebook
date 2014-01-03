@@ -25,7 +25,9 @@ exports.getRandomColleges = function (app, callback) {
       var indices  = [];
       var results  = [];
 
-      while(results.length < limit || colleges.length === 0) {
+      limit = limit <= res.rows.length ? limit : res.rows.length
+
+      for (var x = 0; x < limit; x++) {
         var index = getRandom(0, colleges.length);
 
         results.push(colleges[index]);

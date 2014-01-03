@@ -35,21 +35,22 @@ function routes(app) {
         break;
     }
 
-    //require('../helpers/db').getRandomColleges(app, function (colleges) {
+    require('../helpers/db').getRandomColleges(app, function (colleges) {
       res.render('index',
       {
         champion    : champion,
         baseUrl     : config.baseURL,
         alertType   : alertType,
         alertMsg    : alertMsg,
-        colleges    : []
+        colleges    : colleges
       });
-    //});
+    });
   });
 
   require('./ajax')(app);
   require('./registration')(app);
   require('./schools')(app);
+  require('./search')(app);
 }
 
 module.exports = routes;

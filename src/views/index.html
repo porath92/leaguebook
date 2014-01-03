@@ -16,7 +16,7 @@
       </div>
       <button type="submit" class="btn btn-success">Enroll Now!</button>
     </form>
-    <p class="text-muted"><small>* Only .edu email addresses are allowed to enroll.</small></p>
+    <p><small>* Only .edu email addresses are allowed to enroll.</small></p>
     <div class="alert {{alertType}}">  
       <a class="close" data-dismiss="alert">×</a>
       {{alertMsg}} 
@@ -35,11 +35,15 @@
           <li><a href="#">MadGlory</a></li>
           <li><a href="#">ClayBot9000</a></li>
         </ol>
-        <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
+        <p><a class="btn btn-default" href="/schools/{{slug}}" role="button">View all &raquo;</a></p>
       </div>
     {{/colleges}}
   </div>
 </div>
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script>
   $(function(){
     $( "#school" ).autocomplete({
