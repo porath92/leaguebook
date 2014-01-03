@@ -33,6 +33,11 @@ body {
   height: 20px;
 }
 
+.profile-icon-large {
+  width: 40px;
+  height: 40px;
+}
+
 #intro-header {
   margin-top: 80px;
 }
