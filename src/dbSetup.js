@@ -23,6 +23,8 @@ CREATE TABLE users ( \
   email           varchar(50) NOT NULL, \
   name            varchar NOT NULL, \
   summoner_id     numeric, \
+  tier            varchar(12), \
+  rank            numeric, \
   confirmation_id uuid, \
   create_date     date NOT NULL DEFAULT now() \
 ); \

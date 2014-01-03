@@ -21,7 +21,9 @@ module.exports = function(app) {
             'college_id'      : college_id,
             'name'            : user,
             'summoner_id'     : summoner.id,
-            'confirmation_id' : confirmId
+            'confirmation_id' : confirmId,
+            'tier'            : summoner.tier,
+            'rank'            : summoner.rank
           }), function (err, res) {
             var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
             emailer.sendConfirmation(email, returnURL);

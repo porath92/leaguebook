@@ -17,7 +17,38 @@ module.exports = {
 			}else if(!self.validateEmail(email)) {
 				return callback(false);
 			}else{
-				return callback(response);
+				//Get rank
+				api.getLeagues({
+					'region': 'NA',
+					'queue'	: 'RANKED_SOLO_5x5',
+					'summonerId'	: response.id 
+				},
+				function(data) {
+					response.tier = (data.tier || 'Unknown');
+					switch(response.tier.toLowerCase()) {
+						case 'challenger':
+								response.rank = 6;
+							break;
+						case 'diamond':
+								response.rank = 5;
+							break;
+						case 'platinum':
+								response.rank = 4;
+							break;
+						case 'gold':
+								response.rank = 3;
+							break;
+						case 'silver':
+								response.rank = 2;
+							break;
+						case 'bronze':
+								response.rank = 1;
+							break;
+						default:
+							response.rank = 0;
+					}
+					return callback(response);
+				});
 			}
 		});
 	}
