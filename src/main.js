@@ -27,6 +27,16 @@ app.use(express.logger('dev')); // TODO configure me from config object
 app.use(express.methodOverride()); // Allow requests to set request method as param
 app.use(app.router); // Got through all that? Neat. Hit the app.
 
+// Handle 404
+app.use(function(req, res) {
+   res.send('404: Page not Found', 404);
+});
+
+// Handle 500
+app.use(function(error, req, res, next) {
+   res.send('500: Internal Server Error', 500);
+});
+
 require('./helpers/db').connect(function (psql) {
   app.psql = psql;
   app.sql  = require('./sql');
