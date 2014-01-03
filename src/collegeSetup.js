@@ -38,9 +38,9 @@ waterfall([
     psql.query(sql.insertMulti('college', rows), function (err, res) {
       callback(err);
     });
-    callback();
   }
 ], function (err, res) {
   console.log(err);
+  psql.end();
 });
 
