@@ -1,6 +1,8 @@
 var quote = function (str) {
   if (str) {
-    str = str.replace(/'/g, "''");
+    if (typeof str === 'string') {
+      str = str.replace(/'/g, "''");
+    }
     return "'" + str + "'";
   } else {
     return 'null';
@@ -141,4 +143,17 @@ module.exports.update = function (table, fields, where, returnColumn) {
 
   console.log(query);
   return query;
+}
+
+module.exports.getColleges = function () {
+  var query = 'SELECT distinct(college_id) FROM college WHERE college_id IN (SELECT college_id FROM users WHERE college_id > 0);';
+
+  console.log(query);
+  return query;
+}
+
+module.exports.getUsers = function (college_id) {
+  var query = module.exports.select('*', 'users', {
+    'college_id' : college_id
+  });
 }
