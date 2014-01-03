@@ -23,8 +23,8 @@ App to easily find League of Legends players from different colleges.
     grant all on database leaguebook to leaguebook
 
 ###Navigate to the src directory then run the db setup scripts
-    node dbSetup
-    node collegeSetup
+    node src/dbSetup.js
+    node src/collegeSetup.js
 
 ## Go
-    node ./src/main.js
+    node src/main.js
