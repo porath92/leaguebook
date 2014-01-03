@@ -34,8 +34,8 @@ module.exports = function(app) {
     app.psql.query(app.sql('update', 'users', {
         'confirmation_id' : ''
       }, {
-        'name' : user,
-        'confirmation_id' : confirmId
+        'name' : req.params.user,
+        'confirmation_id' : req.params.confirmId
       }), function (err) {
         if (!err) {
           res.redirect(config.baseURL);
