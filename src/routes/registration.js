@@ -31,7 +31,7 @@ module.exports = function(app) {
 	});
 
 	app.get('/confirm/:user/:confirmId', function(req, res) {
-    app.psql.query(app.sql('update', 'users', {
+    app.psql.query(app.sql.update('users', {
         'confirmation_id' : ''
       }, {
         'name' : req.params.user,
