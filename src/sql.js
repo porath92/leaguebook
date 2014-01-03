@@ -156,7 +156,6 @@ module.exports.getUsers = function (college_id) {
   var query = module.exports.select('*', 'users', {
     'college_id' : college_id
   });
-  
-  console.log(query);
+
   return query;
 }
