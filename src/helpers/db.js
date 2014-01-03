@@ -20,7 +20,6 @@ exports.getRandomColleges = function (app, callback) {
   var limit = 3;
 
   app.psql.query(app.sql.getColleges(), function (err, res) {
-    console.log(res);
     if (res && res.rowCount > 0) {
       var colleges = res.rows;
       var indices  = [];
