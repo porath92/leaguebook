@@ -1,6 +1,6 @@
 function routes(app) {
   var _ = require('underscore');
-  
+  var config = require('../config.js').configData;
   app.get('/', function(req, res){
 
     var champions = [
@@ -21,12 +21,17 @@ function routes(app) {
     var champion = champions[Math.floor(Math.random() * champions.length)];
     
     var registered = (req.query.r == 1) ? false : true;
+    if(req.query.r == 1) {
+
+    }else if(req.query.r == 0) {
+
+    }
     res.render('index',
     {
       champion: champion,
-      registered: registered
+      registered: registered,
+      url: config.baseURL
     });
-    
   });
 
   require('./ajax')(app);
