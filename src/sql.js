@@ -28,7 +28,7 @@ var buildWhere = function (where, operator) {
  *@param {String} table
  *@param {Object} where
  */
-module.exports.select = function (columns, table, where) {
+module.exports.select = function (columns, table, where, limit) {
   var query = 'SELECT ';
 
   if (typeof columns != 'string') {
@@ -43,10 +43,17 @@ module.exports.select = function (columns, table, where) {
   query += 'FROM ' + table;
 
   if (typeof where != 'string') {
-    query += buildWhere(where) + ';';
+    query += buildWhere(where);
   } else {
-    query += ' WHERE ' + where + ';';
+    query += ' WHERE ' + where;
   }
+
+  if (limit) {
+    query += ' LIMIT ' + limit;
+  }
+
+  query += ';';
+
   console.log(query);
   return query;
 }
@@ -154,5 +161,19 @@ module.exports.getColleges = function () {
 
 module.exports.getUsers = function (college_id) {
   var query = 'SELECT * FROM users WHERE college_id = ' + college_id + ' ORDER BY rank DESC;';
+
+  console.log(query);
+  return query;
+}
+
+module.exports.getUsersFromColleges = function (collegeIds, eachLimit) {
+  var query = '';
+
+  for (var x = 0; x < collegeIds.length; x++) {
+    query += module.exports.select('*', 'users', {
+      'college_id' : collegeIds[x]
+    }, eachLimit);
+  }
+
   return query;
 }

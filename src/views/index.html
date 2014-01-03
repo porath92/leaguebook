@@ -28,12 +28,12 @@
   <!-- Example row of columns -->
   <div class="row">
     {{#colleges}}
-      <div class="top-schools col-md-4">
-        <h3>{{name}}</h3>
-        <ol class="top-summoners">
-          <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon1.jpg" class="profile-icon" /> Shockem</li>
-          <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon1.jpg" class="profile-icon" /> ClayBot9000</li>
-          <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon1.jpg" class="profile-icon" /> Scythesmith</li>
+      <div class="col-md-4">
+        <h2>{{name}}</h2>
+        <ol>
+          {{#users}}
+            <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon1.jpg" class="profile-icon" />{{name}}</li>
+          {{/users}}
         </ol>
         <p><a class="btn btn-default" href="/schools/{{slug}}" role="button">View all &raquo;</a></p>
       </div>
