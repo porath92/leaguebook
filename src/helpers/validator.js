@@ -24,7 +24,7 @@ module.exports = {
 					'summonerId'	: response.id 
 				},
 				function(data) {
-					response.tier = (data.tier || 'Unknown');
+					response.tier = (data.tier || 'Unranked');
 					switch(response.tier.toLowerCase()) {
 						case 'challenger':
 								response.rank = 6;
