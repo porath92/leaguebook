@@ -1,25 +1,15 @@
+var _ = require('underscore');
+
 module.exports = function(app) {
 
   app.get('/schools', function(req, res) {
 
-    var schools = [
-      {
-        rank: 1,
-        name: 'College of Saint Rose',
-        slug: 'college-of-saint-rose',
-        summoner_count: 2
-      },
-      {
-        rank: 2,
-        name: 'Harvard University',
-        slug: 'harvard-university',
-        summoner_count: 1
-      }
-    ];
+    app.psql.query('SELECT name, slug FROM college ORDER BY name', function (err, data) {
 
-    res.render('schools-index',
-    {
-      schools: schools
+      res.render('schools-index',
+      {
+        schools: data.rows
+      });
     });
 
   });
