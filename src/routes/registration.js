@@ -13,23 +13,27 @@ module.exports = function(app) {
         sql           = require('../sql'),
         psql          = app.psql;
 
-		if(validator.validateRegistration(user, email, college_id)) {
-			var confirmId = uuid.v1();
-      psql.query(sql.insert('users', {
-          'email'           : email,
-          'college_id'      : college_id,
-          'name'            : user,
-          'confirmation_id' : confirmId
-        }), function (err, res) {
-			    var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
-			    emailer.sendConfirmation(email, returnURL);
-        }
-      );
-      registeredURL = registeredURL + '/?r=1';
-		}else {
-      registeredURL = registeredURL + '/?r=0';
-    }
-		res.redirect(registeredURL);
+    validator.validateRegistration(user, email, college_id, function(summoner){
+      if(summoner){
+        var confirmId = uuid.v1();
+        psql.query(sql.insert('users', {
+            'email'           : email,
+            'college_id'      : college_id,
+            'name'            : user,
+            'summoner_id'     : summoner.id,
+            'confirmation_id' : confirmId
+          }), function (err, res) {
+            var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
+            emailer.sendConfirmation(email, returnURL);
+          }
+        );
+        registeredURL = registeredURL + '/?r=1';
+      }else{
+        registeredURL = registeredURL + '/?r=0';  
+      }
+      res.redirect(registeredURL);
+    });
+		
 	});
 
 	app.get('/confirm/:user/:confirmId', function(req, res) {
