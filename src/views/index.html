@@ -61,7 +61,7 @@
     $( "#school" ).autocomplete({
       source: function( request, response ) {
         $.ajax({
-          url: {{url}} + "/ajax/schools",
+          url: "{{baseUrl}}/ajax/schools",
           data: {
             maxRows: 5,
             name: request.term

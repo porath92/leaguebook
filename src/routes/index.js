@@ -30,7 +30,7 @@ function routes(app) {
     {
       champion: champion,
       registered: registered,
-      url: config.baseURL
+      baseUrl: config.baseURL
     });
   });
 
