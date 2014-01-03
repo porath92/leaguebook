@@ -21,3 +21,7 @@ body {
 #intro-header {
   margin-top: 80px;
 }
+
+#search-box {
+  width: 200px;
+}
