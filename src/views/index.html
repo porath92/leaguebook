@@ -61,7 +61,7 @@
     $( "#school" ).autocomplete({
       source: function( request, response ) {
         $.ajax({
-          url: "http://localhost:3000/ajax/schools",
+          url: {{url}} + "/ajax/schools",
           data: {
             maxRows: 5,
             name: request.term
