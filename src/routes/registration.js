@@ -23,7 +23,8 @@ module.exports = function(app) {
             'summoner_id'     : summoner.id,
             'confirmation_id' : confirmId,
             'tier'            : summoner.tier,
-            'rank'            : summoner.rank
+            'rank'            : summoner.rank,
+            'profile_icon_id' : summoner.profileIconId
           }), function (err, res) {
             var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
             emailer.sendConfirmation(email, returnURL);
