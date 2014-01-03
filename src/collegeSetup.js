@@ -30,24 +30,17 @@ waterfall([
           }
 
           rows.push(row);
-
-          var query = sql.insert('college', row);
-          psql.query(query, function (err) {
-            if (err) {
-            console.log('\n\n', query, err, row);
-            }
-          });
         }
         callback(null, rows);
       })
     ;
   }, function (rows, callback) {
-    /*psql.query(sql.insertMulti('college', rows), function (err, res) {
+    psql.query(sql.insertMulti('college', rows), function (err, res) {
       callback(err);
-    });*/
-    callback();
+    });
   }
 ], function (err, res) {
   console.log(err);
+  psql.end();
 });
 

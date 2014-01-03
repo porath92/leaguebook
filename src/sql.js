@@ -1,6 +1,6 @@
 var quote = function (str) {
   if (str) {
-    str = str.replace("'", "''");
+    str = str.replace(/'/g, "''");
     return "'" + str + "'";
   } else {
     return 'null';
