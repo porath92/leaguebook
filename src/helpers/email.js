@@ -10,10 +10,10 @@ module.exports = {
 		});
 
 		var mailOptions = {
-	    from: "LeagueBook Confirmation <no-reply@leaguebook.herokuapp.com>",
+	    from: "LeagueBook Confirmation <leagueoflegendsbook@gmail.com>",
 	    to: email,
 	    subject: "LeagueBook: Please confirm your email address.",
-	    text: "",
+	    text: "Please confirm that this is indeed you!",
 	    html: "Please confirm that this is indeed you! <a href='" + returnURL + "'>THIS LINK</a>"
 		}
 
