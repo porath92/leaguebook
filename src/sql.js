@@ -36,7 +36,11 @@ module.exports.select = function (columns, table, where) {
 
   query += 'FROM ' + table;
 
-  query += buildWhere(where) + ';';
+  if (typeof where != 'string') {
+    query += buildWhere(where) + ';';
+  } else {
+    query += ' WHERE ' + where + ';';
+  }
   console.log(query);
   return query;
 }
