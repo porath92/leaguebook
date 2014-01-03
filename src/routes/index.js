@@ -34,12 +34,16 @@ function routes(app) {
         alertType = "alert-success";
         break;
     }
-    res.render('index',
-    {
-      champion    : champion,
-      baseUrl     : config.baseURL,
-      alertType   : alertType,
-      alertMsg    : alertMsg
+
+    require('../helpers/db').getRandomColleges(app, function (colleges) {
+      res.render('index',
+      {
+        champion    : champion,
+        baseUrl     : config.baseURL,
+        alertType   : alertType,
+        alertMsg    : alertMsg,
+        colleges    : colleges
+      });
     });
   });
 

@@ -28,7 +28,6 @@ exports.getRandomColleges = function (app, callback) {
 
       while(results.length < limit || colleges.length === 0) {
         var index = getRandom(0, colleges.length);
-        console.log(colleges, index);
 
         results.push(colleges[index]);
         colleges.splice(index, 1);

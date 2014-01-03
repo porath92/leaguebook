@@ -146,7 +146,7 @@ module.exports.update = function (table, fields, where, returnColumn) {
 }
 
 module.exports.getColleges = function () {
-  var query = 'SELECT distinct(college_id) FROM college WHERE college_id IN (SELECT college_id FROM users WHERE college_id > 0);';
+  var query = 'SELECT distinct(college_id), * FROM college WHERE college_id IN (SELECT college_id FROM users WHERE college_id > 0);';
 
   console.log(query);
   return query;

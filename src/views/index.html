@@ -27,33 +27,17 @@
 <div class="container">
   <!-- Example row of columns -->
   <div class="row">
-    <div class="col-md-4">
-      <h2>#1 College of Saint Rose</h2>
-      <ol>
-        <li><a href="#">Shockem</a></li>
-        <li><a href="#">MadGlory</a></li>
-        <li><a href="#">ClayBot9000</a></li>
-      </ol>
-      <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-      <h2>#2 Harvard University</h2>
-      <ol>
-        <li><a href="#">Scythesmith</a></li>
-        <li><a href="#">KevanoWnek</a></li>
-        <li><a href="#">Deastwoo</a></li>
-      </ol>
-      <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
-   </div>
-    <div class="col-md-4">
-      <h2>#3 Skidmore University</h2>
-      <ol>
-        <li><a href="#">Shockem</a></li>
-        <li><a href="#">MadGlory</a></li>
-        <li><a href="#">ClayBot9000</a></li>
-      </ol>
-      <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
-    </div>
+    {{#colleges}}
+      <div class="col-md-4">
+        <h2>{{name}}</h2>
+        <ol>
+          <li><a href="#">Shockem</a></li>
+          <li><a href="#">MadGlory</a></li>
+          <li><a href="#">ClayBot9000</a></li>
+        </ol>
+        <p><a class="btn btn-default" href="#" role="button">View all &raquo;</a></p>
+      </div>
+    {{/colleges}}
   </div>
 </div>
 <script>
