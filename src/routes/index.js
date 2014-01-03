@@ -19,18 +19,29 @@ function routes(app) {
       'Zed','Ziggs','Zilean','Zyra'
     ];
     var champion = champions[Math.floor(Math.random() * champions.length)];
-    
-    var registered = (req.query.r == 1) ? false : true;
-    if(req.query.r == 1) {
-
-    }else if(req.query.r == 0) {
-
+    var alertMsg, alertType;
+    switch(req.query.r) {
+      case 0:
+        alertMsg = "Error processing email, see Doctor Mundo if problem persists.";
+        alertType = "alert-error";
+        break;
+      case 1:
+        alertMsg = "Go back to base Summoner to buy items and verify your email!";
+        alertType = "alert-info";
+        break;
+      case 2:
+        alertMsg = "Pentakill! Victory! You have sucessfully been added to the LeagueBook Database.";
+        alertType = "alert-sucess";
+        break;
     }
+    console.log('alertType is ');
+    console.log(alertType);
     res.render('index',
     {
-      champion: champion,
-      registered: registered,
-      baseUrl: config.baseURL
+      champion    : champion,
+      baseUrl     : config.baseURL,
+      alertType   : alertType,
+      alertMsg    : alertMsg
     });
   });
 

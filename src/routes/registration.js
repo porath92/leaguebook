@@ -40,7 +40,7 @@ module.exports = function(app) {
         'confirmation_id' : req.params.confirmId
       }), function (err) {
         if (!err) {
-          res.redirect(config.baseURL);
+          res.redirect(config.baseURL + '/?r=2');
         } else {
           console.log(err);
         }
