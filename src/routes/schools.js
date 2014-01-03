@@ -26,7 +26,7 @@ module.exports = function(app) {
           if (err) {
             console.log(err);
           } else {
-            summoners = results.rows;
+            summoners = result.rows;
           }
 
           res.render('school',
