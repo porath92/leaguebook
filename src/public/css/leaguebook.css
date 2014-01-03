@@ -17,3 +17,7 @@ body {
   padding: 5px;
   margin-bottom: 0px;
 }
+
+#intro-header {
+  margin-top: 80px;
+}
