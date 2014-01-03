@@ -12,7 +12,9 @@ function routes(app) {
     });
   });
 
+  require('./ajax')(app);
   require('./registration')(app);
+  require('./schools')(app);
 }
 
 module.exports = routes;
