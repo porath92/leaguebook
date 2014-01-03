@@ -17,13 +17,11 @@
       <button type="submit" class="btn btn-success">Enroll Now!</button>
     </form>
     <p class="text-muted"><small>* Only .edu email addresses are allowed to enroll.</small></p>
+    <div class="alert {{alertType}}">  
+      <a class="close" data-dismiss="alert">×</a>
+      {{alertMsg}} 
+    </div>
   </div>
-  {{#if alertMsg}}
-  <div class="alert {{alertType}}">  
-    <a class="close" data-dismiss="alert">×</a>
-    {{alertMsg}} 
-  </div>
-  {{/if}}
 </div>
 
 <div class="container">

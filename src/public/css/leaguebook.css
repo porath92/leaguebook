@@ -12,3 +12,8 @@ body {
 .form-inline .form-group {
   margin-right: 5px;
 }
+
+.alert {
+  padding: 5px;
+  margin-bottom: 0px;
+}

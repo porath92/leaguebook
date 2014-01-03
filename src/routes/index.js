@@ -9,7 +9,7 @@ function routes(app) {
       'Elise','Evelynn','Ezreal','FiddleSticks','Fiora','Fizz','Galio','Gangplank',
       'Garen','Gragas','Graves','Hecarim','Heimerdinger','Irelia','Janna','JarvanIV',
       'Jax','Jayce','Karma','Karthus','Kassadin','Katarina','Kayle','Kennen','Khazix',
-      'Kogqaw','Leblanc','LeeSin','Leona','Lissandra','Lulu','Lux','Malphite','Malzahar',
+      'KogMaw','Leblanc','LeeSin','Leona','Lissandra','Lulu','Lux','Malphite','Malzahar',
       'Maokai','MasterYi','MissFortune','Mordekaiser','Morgana','Nami','Nasus','Nautilus',
       'Nidalee','Nocturne','Nunu','Olaf','Orianna','Pantheon','Poppy','Quinn','Rammus','Renekton',
       'Rengar','Riven','Rumble','Ryze','Sejuani','Shaco','Shen','Shyvana','Singed','Sion','Sivir',
@@ -20,18 +20,19 @@ function routes(app) {
     ];
     var champion = champions[Math.floor(Math.random() * champions.length)];
     var alertMsg, alertType;
+    console.log('r is ' + req.query.r);
     switch(req.query.r) {
-      case 0:
+      case '0':
         alertMsg = "Error processing email, see Doctor Mundo if problem persists.";
-        alertType = "alert-error";
+        alertType = "alert-danger";
         break;
-      case 1:
-        alertMsg = "Go back to base Summoner to buy items and verify your email!";
+      case '1':
+        alertMsg = "Return to base Summoner to buy items and verify your email!";
         alertType = "alert-info";
         break;
-      case 2:
+      case '2':
         alertMsg = "Pentakill! Victory! You have sucessfully been added to the LeagueBook Database.";
-        alertType = "alert-sucess";
+        alertType = "alert-success";
         break;
     }
     console.log('alertType is ');
