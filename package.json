@@ -1,6 +1,6 @@
 {
   "name": "leaguebook",
-  "description": "consume the world of Twitter",
+  "description": "App to easily find League of Legends players from different colleges.",
   "version": "0.0.1",
   "private": true,
   "main": "src/main.js",
