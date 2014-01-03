@@ -15,17 +15,6 @@ module.exports = function(app) {
   });
 
   app.get('/school/:id', function(req, res) {
-    var summoners = [
-      {
-        rank: 1,
-        summoner: 'Shockem'
-      },
-      {
-        rank: 2,
-        summoner: 'ClayBot9000'
-      }
-    ];
-
     app.psql.query(app.sql.select(
       ['name', 'college_id', 'size', 'state'],
       'college',
@@ -36,10 +25,12 @@ module.exports = function(app) {
       var school = data.rows[0];
       if(!_.isEmpty(school)) {
         //get members
-        res.render('school',
-        {
-          school: data.rows[0],
-          summoners: summoners
+        app.psql.query(app.sql.getUsers(school.college_id), function(err, data) {
+          res.render('school',
+          {
+            school: school,
+            summoners: data.rows
+          });
         });
       }
     });
