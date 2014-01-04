@@ -10,6 +10,16 @@ module.exports = {
 	validateRegistration: function(user, email, school, callback) {
 		var self = this;
 
+		var ranks = {
+			challenger: 6,
+			diamond: 5,
+			platinum: 4,
+			gold: 3,
+			silver: 2,
+			bronze: 1,
+			unranked: 0
+		};
+
 		api.getSummoner({ summonerName: user }, function(response){
 			
 			if(_.isUndefined(response.id) || _.isEmpty(email) || _.isEmpty(school)) {
@@ -25,32 +35,13 @@ module.exports = {
 				},
 				function(data) {
 					if(_.isUndefined(data.tier)) {
-						response.tier = 'Unranked';
+						response.tier = 'UNRANKED';
 					}else {
 						response.tier = data.tier;
 					}
-					switch(response.tier.toLowerCase()) {
-						case 'challenger':
-								response.rank = 6;
-							break;
-						case 'diamond':
-								response.rank = 5;
-							break;
-						case 'platinum':
-								response.rank = 4;
-							break;
-						case 'gold':
-								response.rank = 3;
-							break;
-						case 'silver':
-								response.rank = 2;
-							break;
-						case 'bronze':
-								response.rank = 1;
-							break;
-						default:
-							response.rank = 0;
-					}
+
+					response.rank = ranks[response.tier.toLowerCase()];
+					
 					return callback(response);
 				});
 			}

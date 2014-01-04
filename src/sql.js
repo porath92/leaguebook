@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var quote = function (str) {
   if (str) {
     if (typeof str === 'string') {
@@ -69,7 +71,12 @@ module.exports.insert = function (table, pairs, returnColumn) {
 
   for (var x in pairs) {
     columns += x + ', ';
-    values += quote(pairs[x]) + ', ';
+    
+    if(_.isNumber(pairs[x])){
+      values += pairs[x] + ', ';
+    } else {
+      values += quote(pairs[x]) + ', ';
+    }
   }
   columns = columns.replace(/, $/, '');
   values  = values.replace(/, $/, '');
@@ -136,7 +143,11 @@ module.exports.update = function (table, fields, where, returnColumn) {
   var query = 'UPDATE ' + table + ' SET ';
 
   for (var x in fields) {
-    query += x + ' = ' + quote(fields[x]) + ', '
+    if(_.isNumber(pairs[x])){
+      query += x + ' = ' + fields[x] + ', '
+    } else {
+      query += x + ' = ' + quote(fields[x]) + ', '
+    }
   }
   query = query.replace(/, $/, '');
 
