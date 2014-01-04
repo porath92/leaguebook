@@ -2,7 +2,7 @@ var _ = require('underscore');
 
 module.exports = function(app) {
   app.get('/schools', function(req, res) {
-    app.psql.query('SELECT * FROM college ORDER BY name LIMIT 10', function (err, data) {
+    app.psql.query('SELECT DISTINCT college.name, college, slug FROM college INNER JOIN users ON college.college_id = users.college_id ORDER BY college.name', function (err, data) {
       res.render('schools-list',
       {
         schools: data.rows
