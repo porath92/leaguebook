@@ -24,7 +24,7 @@ module.exports = {
 					'summonerId'	: response.id 
 				},
 				function(data) {
-					if(_.isEmpty(data.tier)) {
+					if(_.isUndefined(data.tier)) {
 						response.tier = 'Unranked';
 					}else {
 						response.tier = data.tier;

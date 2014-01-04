@@ -2,6 +2,16 @@ body {
   padding-top: 48px;
 }
 
+html,body{
+  height: 100%
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  margin: 0 auto -71px;
+}
+
 .jumbotron {
   padding-top: 0;
   color: #fff;
@@ -38,8 +48,9 @@ body {
   height: 40px;
 }
 
-#intro-header {
-  margin-top: 80px;
+#home-text {
+  padding-top: 100px;
+  padding-bottom: 50px;
 }
 
 #search-box {

@@ -36,7 +36,6 @@ module.exports = function(app) {
       }
       res.redirect(registeredURL);
     });
-		
 	});
 
 	app.get('/confirm/:user/:confirmId', function(req, res) {
