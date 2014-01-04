@@ -17,7 +17,7 @@ exports.connect = function(callback) {
 }
 
 exports.getRandomColleges = function (app, callback) {
-  var collegeLimit = 3;
+  var collegeLimit = 6;
   var userLimit    = 3;
 
   app.psql.query(app.sql.getColleges(), function (err, res) {
