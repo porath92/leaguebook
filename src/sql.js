@@ -143,7 +143,7 @@ module.exports.update = function (table, fields, where, returnColumn) {
   var query = 'UPDATE ' + table + ' SET ';
 
   for (var x in fields) {
-    if(_.isNumber(pairs[x])){
+    if(_.isNumber(fields[x])){
       query += x + ' = ' + fields[x] + ', '
     } else {
       query += x + ' = ' + quote(fields[x]) + ', '
