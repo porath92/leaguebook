@@ -33,6 +33,14 @@ function routes(app) {
         alertMsg = "Pentakill! Victory! You have sucessfully been added to the LeagueBook Database.";
         alertType = "alert-success";
         break;
+      case '3':
+        alertMsg = "User Already Exists!";
+        alertType = "alert-warning";
+        break;
+      case '4':
+        alertMsg = "School does not exist, please use the autocomplete school names only.";
+        alertType = "alert-warning";
+        break;
     }
 
     require('../helpers/db').getRandomColleges(app, function (colleges) {

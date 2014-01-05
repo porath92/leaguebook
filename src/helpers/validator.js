@@ -21,7 +21,6 @@ module.exports = {
 		};
 
 		api.getSummoner({ summonerName: user }, function(response){
-			
 			if(_.isUndefined(response.id) || _.isEmpty(email) || _.isEmpty(school)) {
 				return callback(false);
 			}else if(!self.validateEmail(email)) {

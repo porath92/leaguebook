@@ -177,6 +177,12 @@ module.exports.getUsers = function (college_id) {
   return query;
 }
 
+module.exports.getUserByName = function (username) {
+  var query = "SELECT * FROM users WHERE name = '" + username + "';";
+  console.log(query);
+  return query;
+}
+
 module.exports.getUsersFromColleges = function (collegeIds, eachLimit) {
   var query = '';
 
