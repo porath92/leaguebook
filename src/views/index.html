@@ -18,7 +18,6 @@
     </form>
     <p><small>* NA region with .edu email addresses are allowed to enroll.</small></p>
     <div class="alert {{alertType}}">  
-      <a class="close" data-dismiss="alert">×</a>
       {{alertMsg}} 
     </div>
   </div>
@@ -28,7 +27,7 @@
   <!-- Example row of columns -->
   <div class="row">
     {{#colleges}}
-      <div class="top-schools col-md-4">
+      <div class="top-schools col-md-4 min-med-height">
         <h2>{{name}}</h2>
         <ol class="top-summoners">
           {{#users}}

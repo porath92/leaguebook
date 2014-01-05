@@ -88,3 +88,7 @@ html,body{
   background-color: black;
   margin-top: -200px;
 }
+
+.min-med-height {
+  min-height: 225px;
+}
