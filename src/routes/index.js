@@ -22,23 +22,23 @@ function routes(app) {
     var alertMsg, alertType;
     switch(req.query.r) {
       case '0':
-        alertMsg = "Error processing email, see Doctor Mundo if problem persists.";
+        alertMsg = "Error processing email, Mundo not detect .edu email.";
         alertType = "alert-danger";
         break;
       case '1':
-        alertMsg = "Return to base Summoner to buy items and verify your email!";
+        alertMsg = "Mundo says verify email.";
         alertType = "alert-info";
         break;
       case '2':
-        alertMsg = "Pentakill! Victory! You have sucessfully been added to the LeagueBook Database.";
+        alertMsg = "Pentakill! Victory! Mundo can find you now!";
         alertType = "alert-success";
         break;
       case '3':
-        alertMsg = "User Already Exists!";
+        alertMsg = "Mundo says user already exists!";
         alertType = "alert-warning";
         break;
       case '4':
-        alertMsg = "School does not exist, please use the autocomplete school names only.";
+        alertMsg = "Mundo says school does not exist, Mundo uses autocomplete school names only.";
         alertType = "alert-warning";
         break;
     }
