@@ -41,6 +41,10 @@ function routes(app) {
         alertMsg = "Mundo says school does not exist, Mundo uses autocomplete school names only.";
         alertType = "alert-warning";
         break;
+      case '5':
+        alertMsg = "Mundo could not find your summoner.";
+        alertType = "alert-warning";
+        break;
     }
 
     require('../helpers/db').getRandomColleges(app, function (colleges) {
