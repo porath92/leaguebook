@@ -29,37 +29,37 @@ module.exports = function(app) {
         return;
       }
 
-      if(summoner){
-        //Check if user already exists
-        psql.query(sql.getUserByName(user), function(err, result) {
-          if(result.rows.length == 0) {
-            var confirmId = uuid.v1();
-            //Okay no user exists with this name, now insert them
-            psql.query(sql.insert('users', {
-                'email'           : email,
-                'college_id'      : college_id,
-                'name'            : user,
-                'summoner_id'     : summoner.id,
-                'confirmation_id' : confirmId,
-                'tier'            : summoner.tier,
-                'rank'            : summoner.rank,
-                'profile_icon_id' : summoner.profileIconId
-              }), function (err, res) {
-                var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
-                emailer.sendConfirmation(email, returnURL);
-              }
-            );
-            registeredURL = registeredURL + '/?r=1';
-            res.redirect(registeredURL);
-          }else {
-            registeredURL = registeredURL + '/?r=3';
-            res.redirect(registeredURL);
-          }
-        });
-      } else {
+      if(!summoner){
         registeredURL = registeredURL + '/?r=0';
         res.redirect(registeredURL);
       }
+
+      //Check if user already exists
+      psql.query(sql.getUserByName(user), function(err, result) {
+        if(result.rows.length == 0) {
+          var confirmId = uuid.v1();
+          //Okay no user exists with this name, now insert them
+          psql.query(sql.insert('users', {
+              'email'           : email,
+              'college_id'      : college_id,
+              'name'            : user,
+              'summoner_id'     : summoner.id,
+              'confirmation_id' : confirmId,
+              'tier'            : summoner.tier,
+              'rank'            : summoner.rank,
+              'profile_icon_id' : summoner.profileIconId
+            }), function (err, res) {
+              var returnURL = config.baseURL + "/confirm/" + user + "/" + confirmId;
+              emailer.sendConfirmation(email, returnURL);
+            }
+          );
+          registeredURL = registeredURL + '/?r=1';
+          res.redirect(registeredURL);
+        }else {
+          registeredURL = registeredURL + '/?r=3';
+          res.redirect(registeredURL);
+        }
+      });
     });
   });
 
