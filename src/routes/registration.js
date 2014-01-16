@@ -30,8 +30,8 @@ module.exports = function(app) {
       }
 
       if(!summoner){
-        registeredURL = registeredURL + '/?r=0';
-        res.redirect(registeredURL);
+        res.redirect(registeredURL + '/?r=0');
+        return;
       }
 
       //Check if user already exists
