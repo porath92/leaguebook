@@ -11,7 +11,7 @@ module.exports = function(app) {
         college_id    = req.body.college_id,
         registeredURL = config.baseURL,
         sql           = require('../sql'),
-        psql          = app.psql;
+        psql          = req.psql;
 
     validator.validateRegistration(user, email, college_id, function(summoner, errors){
       if (errors.school) {
@@ -64,7 +64,7 @@ module.exports = function(app) {
   });
 
   app.get('/confirm/:user/:confirmId', function(req, res) {
-    app.psql.query(app.sql.update('users', {
+    req.psql.query(app.sql.update('users', {
         'confirmation_id' : ''
       }, {
         'name' : req.params.user,

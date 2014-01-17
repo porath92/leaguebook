@@ -47,7 +47,7 @@ function routes(app) {
         break;
     }
 
-    require('../helpers/db').getRandomColleges(app, function (colleges) {
+    require('../helpers/db').getRandomColleges(req, function (colleges) {
       res.render('index',
       {
         champion    : champion,
