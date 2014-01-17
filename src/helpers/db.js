@@ -1,18 +1,24 @@
+var configData = require('../config').configData;
+var pg         = require('pg');
+
+pg.defaults.poolSize = 15;
+pg.defaults.poolIdleTimeout = 30000;
+pg.defaults.reapIntervalMillis = 1000;
+
 function getRandom(min, max) {
   return Math.floor((Math.random()*max)+min);
 }
 
-exports.connect = function(callback) {
-  var configData = require('../config').configData;
-  var pg         = require('pg');
-  var psql       = new pg.Client(configData.dbURL);
-
-  psql.connect(function (err, res) {
+exports.connect = function(req, res, next) {
+  pg.connect(configData.dbURL, function (err, res) {
     if (err) {
       console.log(err);
     }
 
-    callback(psql);
+    req.psql = res;
+    req.sql  = require('../sql');
+
+    next();
   });
 }
 

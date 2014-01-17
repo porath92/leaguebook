@@ -25,6 +25,7 @@ app.use(express.bodyParser()); // Parse form params to object
 app.use(express.favicon()); // derp
 app.use(express.logger('dev')); // TODO configure me from config object
 app.use(express.methodOverride()); // Allow requests to set request method as param
+app.use(require('./helpers/db').connect);
 app.use(app.router); // Got through all that? Neat. Hit the app.
 
 // Handle 404
@@ -39,17 +40,12 @@ app.use(function(error, req, res, next) {
   res.render('500', {title:'500: Internal Server Error', error: error});
 });
 
-require('./helpers/db').connect(function (psql) {
-  app.psql = psql;
-  app.sql  = require('./sql');
+require('./routes')(app);
+  
+var port = process.env.PORT || 3000;
 
-  require('./routes')(app);
-  
-  var port = process.env.PORT || 3000;
-  
-  http.createServer(app).listen(port, function() {
-    console.log('Listening on port ' + port);
-  });
-  
-  module.exports = app;
+http.createServer(app).listen(port, function() {
+  console.log('Listening on port ' + port);
 });
+  
+module.exports = app;

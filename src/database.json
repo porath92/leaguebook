@@ -1,0 +1,9 @@
+{
+  "dev" : {
+    "driver"   : "pg",
+    "user"     : "leaguebook",
+    "password" : "leaguebook",
+    "host"     : "localhost",
+    "database" : "leaguebook"
+  }
+}
