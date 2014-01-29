@@ -56,7 +56,6 @@ module.exports.select = function (columns, table, where, limit) {
 
   query += ';';
 
-  console.log(query);
   return query;
 }
 
@@ -89,7 +88,6 @@ module.exports.insert = function (table, pairs, returnColumn) {
     query += ';';
   }
 
-  console.log(query);
   return query;
 }
 
@@ -130,7 +128,6 @@ module.exports.delete = function (table, where) {
   }
   query = query.replace(/ AND $/, ';');
 
-  console.log(query);
   return query;
 }
 
@@ -159,27 +156,23 @@ module.exports.update = function (table, fields, where, returnColumn) {
 
   query += ';';
 
-  console.log(query);
   return query;
 }
 
 module.exports.getColleges = function () {
   var query = 'SELECT distinct(college_id), * FROM college WHERE college_id IN (SELECT college_id FROM users WHERE college_id > 0);';
 
-  console.log(query);
   return query;
 }
 
 module.exports.getUsers = function (college_id) {
   var query = 'SELECT * FROM users WHERE college_id = ' + college_id + ' ORDER BY rank DESC;';
 
-  console.log(query);
   return query;
 }
 
 module.exports.getUserByName = function (username) {
   var query = "SELECT * FROM users WHERE name = '" + username + "';";
-  console.log(query);
   return query;
 }
 

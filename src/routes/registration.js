@@ -9,9 +9,7 @@ module.exports = function(app) {
     var user          = req.body.summoner,
         email         = req.body.email,
         college_id    = req.body.college_id,
-        registeredURL = config.baseURL,
-        sql           = require('../sql'),
-        psql          = req.psql;
+        registeredURL = config.baseURL;
 
     validator.validateRegistration(user, email, college_id, function(summoner, errors){
       if (errors.school) {
@@ -35,11 +33,11 @@ module.exports = function(app) {
       }
 
       //Check if user already exists
-      psql.query(sql.getUserByName(user), function(err, result) {
+      req.psql.psqlQuery(req.sql.getUserByName(user), function(err, result) {
         if(result.rows.length == 0) {
           var confirmId = uuid.v1();
           //Okay no user exists with this name, now insert them
-          psql.query(sql.insert('users', {
+          req.psql.psqlQuery(req.sql.insert('users', {
               'email'           : email,
               'college_id'      : college_id,
               'name'            : user,
@@ -64,7 +62,7 @@ module.exports = function(app) {
   });
 
   app.get('/confirm/:user/:confirmId', function(req, res) {
-    req.psql.query(app.sql.update('users', {
+    req.psql.psqlQquery(req.sql.update('users', {
         'confirmation_id' : ''
       }, {
         'name' : req.params.user,

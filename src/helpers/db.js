@@ -9,13 +9,29 @@ function getRandom(min, max) {
   return Math.floor((Math.random()*max)+min);
 }
 
+function PsqlWrapper (psql) {
+  this._psql = psql;
+}
+
+PsqlWrapper.prototype.psqlQuery = function (sql, callback) {
+  console.log(sql);
+
+  this._psql.query(sql, function (err, res) {
+    if (err) {
+      console.log(err);
+    }
+
+    callback(err, res);
+  });
+}
+
 exports.connect = function(req, res, next) {
   pg.connect(configData.dbURL, function (err, res) {
     if (err) {
       console.log(err);
     }
 
-    req.psql = res;
+    req.psql = new PsqlWrapper(res);
     req.sql  = require('../sql');
 
     next();
@@ -26,7 +42,7 @@ exports.getRandomColleges = function (app, callback) {
   var collegeLimit = 6;
   var userLimit    = 3;
 
-  app.psql.query(app.sql.getColleges(), function (err, res) {
+  app.psql.psqlQuery(app.sql.getColleges(), function (err, res) {
     if (res && res.rowCount > 0) {
       var colleges     = res.rows;
       var results      = [];
@@ -45,7 +61,7 @@ exports.getRandomColleges = function (app, callback) {
         colleges.splice(index, 1);
       }
 
-      app.psql.query(app.sql.getUsersFromColleges(collegeIds, userLimit), function (err, res) {
+      app.psql.psqlQuery(app.sql.getUsersFromColleges(collegeIds, userLimit), function (err, res) {
         if (!err) {
           if (res && res.rowCount > 0) {
             var users = res.rows;
