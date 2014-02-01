@@ -33,7 +33,7 @@ waterfall([
                     console.log(err);
                   }
 
-                  console.log(rank);
+                  console.log(res);
 
                   callback();
                 }
