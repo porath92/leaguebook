@@ -12,7 +12,7 @@ psql.connect();
 
 waterfall([
   function (callback) {
-    psql.query(sql.select(['user_id', 'name'], 'users'), callback);
+    psql.query(sql.select(['user_id', 'summoner_id'], 'users'), callback);
   }], function (err, res) {
     eachSeries(res.rows,
       function (item, callback) {
