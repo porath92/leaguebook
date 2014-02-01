@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var RiotAPI = require('riot-api');
-var api = new RiotAPI('47319b52-dccf-41f9-a4dd-1b594255f0e6');
+var api = new RiotAPI(require('../config').configData.riotAPIKey);
+var getRank = require('./rank').getRank;
 module.exports = {
 
 	validateEmail: function(email) {
@@ -10,17 +11,6 @@ module.exports = {
 
 	validateRegistration: function(user, email, school, callback) {
 		var self = this;
-
-		var ranks = {
-			challenger: 6,
-			diamond: 5,
-			platinum: 4,
-			gold: 3,
-			silver: 2,
-			bronze: 1,
-			unranked: 0
-		};
-
 
 		// basic validations before API request
 		if (!self.validateEmail(email)) {
@@ -44,13 +34,10 @@ module.exports = {
 					'summonerId'	: response.id
 				},
 				function(data) {
-					if(_.isUndefined(data.tier)) {
-						response.tier = 'UNRANKED';
-					}else {
-						response.tier = data.tier;
-					}
+          var rank = getRank(data);
 
-					response.rank = ranks[response.tier.toLowerCase()];
+					response.rank = rank.rank;
+          response.tier = rank.tier;
 
 					return callback(response, {});
 				}
