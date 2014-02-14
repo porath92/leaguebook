@@ -13,8 +13,8 @@ psql.connect();
 waterfall([
   function (callback) {
     psql.query(sql.select(['user_id', 'summoner_id'], 'users'), callback);
-  }], function (err, res) {
-    eachSeries(res.rows,
+  }, function (users, callback) {
+    eachSeries(users.rows,
       function (item, callback) {
         setTimeout(function () {
           api.getLeagues({
@@ -45,7 +45,16 @@ waterfall([
         if (err) {
           console.log(err);
         }
+
+        callback();
       }
     );
+  }], function (err, res) {
+    if (err) {
+      console.log(err);
+    }
+
+    psql.end();
+    console.log('\nDone');
   }
 );
