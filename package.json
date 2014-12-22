@@ -8,7 +8,7 @@
     "start": "node src/main.js"
   },
   "dependencies": {
-    "express": "3.2.6",
+    "express": "4.10.6",
     "underscore": "~1.5.1",
     "pg": "2.8.2",
     "async": "0.2.9",
@@ -19,6 +19,11 @@
     "csv": "0.3.6",
     "riot-api": "git+https://cforbes:2ec02eaaae5d6bd63e3234004f5169a5b0f77ef0@github.com/madgloryint/riot-api.git",
     "db-migrate": "0.6.3",
-    "newrelic": "~1.14.3"
+    "newrelic": "~1.14.3",
+    "body-parser": "~1.10.0",
+    "cookie-parser": "~1.3.3",
+    "serve-favicon": "~2.2.0",
+    "morgan": "~1.5.0",
+    "method-override": "~2.3.0"
   }
 }

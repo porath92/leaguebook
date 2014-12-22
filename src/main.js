@@ -4,6 +4,11 @@ var express             = require('express'),
     http                = require('http'),
     path                = require('path'),
     hogan               = require('hogan-express'),
+    favicon             = require('serve-favicon'),
+    cookieParser        = require('cookie-parser'),
+    bodyParser          = require('body-parser'),
+    morgan              = require('morgan'),
+    methodOverride      = require('method-override'),
     riotAPI             = require('./helpers/riot_api');
     // APPLICATION
     app                 = express();
@@ -20,14 +25,21 @@ app.engine('html', hogan);
 
 // Layer up the middleware
 app.use(express.static(path.join(__dirname, 'public'))); // Public folder first, before constraint middleware
-app.use(express.cookieParser()); // Parse cookies to object
-app.use(express.bodyParser()); // Parse form params to object
+app.use(cookieParser()); // Parse cookies to object
+app.use(bodyParser()); // Parse form params to object
 
-app.use(express.favicon()); // derp
-app.use(express.logger('dev')); // TODO configure me from config object
-app.use(express.methodOverride()); // Allow requests to set request method as param
+app.use(favicon(__dirname + '/public/images/lb_fav.ico'));
+app.use(morgan('dev'))
+app.use(methodOverride()); // Allow requests to set request method as param
 app.use(require('./helpers/db').connect);
-app.use(app.router); // Got through all that? Neat. Hit the app.
+
+//routes
+//app.use(app.router); // Got through all that? Neat. Hit the app.
+app.use(require('./routes/index')(app));
+app.use(require('./routes/search')(app));
+app.use(require('./routes/schools')(app));
+app.use(require('./routes/registration')(app));
+app.use(require('./routes/ajax')(app));
 
 // Handle 404
 app.use(function(req, res) {

@@ -3,9 +3,11 @@ module.exports = function(app) {
       uuid      = require('node-uuid'),
       validator = require('../helpers/validator'),
       emailer   = require('../helpers/email'),
+      express   = require('express'),
+      router    = express.Router(),
       config    = require('../config').configData;
 
-  app.post('/enroll', function(req, res) {
+  router.post('/enroll', function(req, res) {
     var user          = req.body.summoner,
         email         = req.body.email,
         college_id    = req.body.college_id,
@@ -61,7 +63,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/confirm/:user/:confirmId', function(req, res) {
+  router.get('/confirm/:user/:confirmId', function(req, res) {
     req.psql.psqlQquery(req.sql.update('users', {
         'confirmation_id' : ''
       }, {
@@ -76,4 +78,6 @@ module.exports = function(app) {
       }
     );
   });
+
+  return router;
 }

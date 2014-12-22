@@ -1,7 +1,9 @@
-function routes(app) {
+module.exports = function(app) {
+  var express = require('express');
+  var router = express.Router();
   var _ = require('underscore');
   var config = require('../config.js').configData;
-  app.get('/', function(req, res){
+  router.get('/', function(req, res){
 
     var champions = [
       'Ahri','Akali','Alistar','Amumu','Anivia','Annie','Ashe','Blitzcrank','Brand',
@@ -63,6 +65,6 @@ function routes(app) {
   require('./registration')(app);
   require('./schools')(app);
   require('./search')(app);
-}
 
-module.exports = routes;
+  return router;
+}
