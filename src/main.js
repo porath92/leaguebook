@@ -1,3 +1,4 @@
+require('newrelic')
 // Top-level dependencies
 var express             = require('express'),
     http                = require('http'),
