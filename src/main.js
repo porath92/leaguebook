@@ -26,12 +26,16 @@ app.engine('html', hogan);
 // Layer up the middleware
 app.use(express.static(path.join(__dirname, 'public'))); // Public folder first, before constraint middleware
 app.use(cookieParser()); // Parse cookies to object
-app.use(bodyParser()); // Parse form params to object
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+app.use(bodyParser.json());
 
 app.use(favicon(__dirname + '/public/images/lb_fav.ico'));
-app.use(morgan('dev'))
+app.use(morgan('combined'))
 app.use(methodOverride()); // Allow requests to set request method as param
-app.use(require('./helpers/db').connect);
 
 //routes
 //app.use(app.router); // Got through all that? Neat. Hit the app.

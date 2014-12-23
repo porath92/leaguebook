@@ -5,7 +5,9 @@ module.exports = function(app) {
       emailer   = require('../helpers/email'),
       express   = require('express'),
       router    = express.Router(),
-      config    = require('../config').configData;
+      config    = require('../config').configData,
+      db        = require('../helpers/db'),
+      sql       = require('../helpers/sql');
 
   router.post('/enroll', function(req, res) {
     var user          = req.body.summoner,
@@ -35,11 +37,14 @@ module.exports = function(app) {
       }
 
       //Check if user already exists
-      req.psql.psqlQuery(req.sql.getUserByName(user), function(err, result) {
-        if(result.rows.length == 0) {
+      db.psqlQuery(sql.getUserByName(user), function(err, result) {
+        if(err) {
+          res.status(500);
+          res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+        }else if(result.rows.length == 0) {
           var confirmId = uuid.v1();
           //Okay no user exists with this name, now insert them
-          req.psql.psqlQuery(req.sql.insert('users', {
+          db.psqlQuery(sql.insert('users', {
               'email'           : email,
               'college_id'      : college_id,
               'name'            : user,
@@ -64,16 +69,18 @@ module.exports = function(app) {
   });
 
   router.get('/confirm/:user/:confirmId', function(req, res) {
-    req.psql.psqlQquery(req.sql.update('users', {
+    db.psqlQquery(sql.update('users', {
         'confirmation_id' : ''
       }, {
         'name' : req.params.user,
         'confirmation_id' : req.params.confirmId
-      }), function (err) {
+      }), function (err, result) {
         if (!err) {
           res.redirect(config.baseURL + '/?r=2');
         } else {
           console.log(err);
+          res.status(500);
+          res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
         }
       }
     );

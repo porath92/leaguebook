@@ -1,10 +1,11 @@
 module.exports = function(app) {
-  var express = require('express');
-  var router = express.Router();
-  var _ = require('underscore');
-  var config = require('../config.js').configData;
+  var _         = require('underscore'),
+      express       = require('express'),
+      router        = express.Router(),
+      config        = require('../config.js').configData,
+      collegeHelper = require('../helpers/colleges');
+  
   router.get('/', function(req, res){
-
     var champions = [
       'Ahri','Akali','Alistar','Amumu','Anivia','Annie','Ashe','Blitzcrank','Brand',
       'Caitlyn','Cassiopeia','Chogath','Corki','Darius','Diana','DrMundo','Draven',
@@ -49,15 +50,20 @@ module.exports = function(app) {
         break;
     }
 
-    require('../helpers/db').getRandomColleges(req, function (colleges) {
-      res.render('index',
-      {
-        champion    : champion,
-        baseUrl     : config.baseURL,
-        alertType   : alertType,
-        alertMsg    : alertMsg,
-        colleges    : colleges
-      });
+    collegeHelper.getRandomColleges(function (err, colleges) {
+      if(colleges) {
+        res.render('index',
+        {
+          champion    : champion,
+          baseUrl     : config.baseURL,
+          alertType   : alertType,
+          alertMsg    : alertMsg,
+          colleges    : colleges
+        });
+      }else {
+        res.status(500);
+        res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+      }
     });
   });
 
