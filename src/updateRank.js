@@ -4,15 +4,13 @@ var RiotAPI    = require('riot-api');
 var waterfall  = require('async').waterfall;
 var api        = new RiotAPI(configData.riotAPIKey);
 var pg         = require('pg');
-var psql       = new pg.Client(configData.dbURL);
-var sql        = require('./sql');
+var db         = new require('./helpers/db');
+var sql        = require('./helpers/sql');
 var getRank    = require('./helpers/rank').getRank;
-
-psql.connect();
 
 waterfall([
   function (callback) {
-    psql.query(sql.select(['user_id', 'summoner_id'], 'users'), callback);
+    db.psqlQuery(sql.select(['user_id', 'summoner_id'], 'users'), callback);
   }, function (users, callback) {
     eachSeries(users.rows,
       function (item, callback) {
@@ -23,7 +21,7 @@ waterfall([
               summonerId : item.summoner_id
             }, function (res) {
               res = getRank(res);
-              psql.query(sql.update('users', {
+              db.psqlQuery(sql.update('users', {
                   rank : res.rank,
                   tier : res.tier
                 }, {
@@ -54,7 +52,6 @@ waterfall([
       console.log(err);
     }
 
-    psql.end();
     console.log('\nDone');
   }
 );
