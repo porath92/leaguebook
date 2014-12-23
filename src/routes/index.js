@@ -3,6 +3,7 @@ module.exports = function(app) {
       express       = require('express'),
       router        = express.Router(),
       config        = require('../config.js').configData,
+      cache         = require('basic-cache'),
       collegeHelper = require('../helpers/colleges');
   
   router.get('/', function(req, res){
@@ -50,21 +51,37 @@ module.exports = function(app) {
         break;
     }
 
-    collegeHelper.getRandomColleges(function (err, colleges) {
-      if(colleges) {
-        res.render('index',
-        {
-          champion    : champion,
-          baseUrl     : config.baseURL,
-          alertType   : alertType,
-          alertMsg    : alertMsg,
-          colleges    : colleges
-        });
-      }else {
-        res.status(500);
-        res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
-      }
-    });
+    var cacheKey = 'FrontPage:Random';
+    var cachedRandomColleges = cache.get(cacheKey);
+
+    if(cachedRandomColleges) {
+      res.render('index',
+      {
+        champion    : champion,
+        baseUrl     : config.baseURL,
+        alertType   : alertType,
+        alertMsg    : alertMsg,
+        colleges    : cachedRandomColleges
+      });
+    }else {
+      collegeHelper.getRandomColleges(function (err, colleges) {
+        if(colleges) {
+          // cache for 2 minutes
+          cache.set(cacheKey, colleges, 120000);
+          res.render('index',
+          {
+            champion    : champion,
+            baseUrl     : config.baseURL,
+            alertType   : alertType,
+            alertMsg    : alertMsg,
+            colleges    : colleges
+          });
+        }else {
+          res.status(500);
+          res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+        }
+      });
+    }
   });
 
   require('./ajax')(app);

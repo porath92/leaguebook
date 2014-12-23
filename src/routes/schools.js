@@ -4,52 +4,81 @@ module.exports = function(app) {
       db      = require('../helpers/db'),
       sql     = require('../helpers/sql'),
       express = require('express'),
+      cache   = require('basic-cache'),
       router  = express.Router();
 
   router.get('/schools', function(req, res) {
-    db.psqlQuery('select college.name, college.slug, COUNT(users.user_id) AS summoner_count, round(avg(users.rank)*count(users.rank)) as college_score from college inner join users on college.college_id = users.college_id group by college.name, college.slug order by college_score DESC, college.name',
-      function (err, data) {
-        if(err) {
-          res.status(500);
-          res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
-        }else {
-          res.render('schools-list',
-          {
-            schools: data.rows
-          });
-        }
-    });
+    var cacheKey = 'schools';
+    var cachedSchools = cache.get(cacheKey);
+
+    if(cachedSchools) {
+      res.render('schools-list',
+      {
+        schools: cachedSchools
+      });
+    }else {
+      db.psqlQuery('select college.name, college.slug, COUNT(users.user_id) AS summoner_count, round(avg(users.rank)*count(users.rank)) as college_score from college inner join users on college.college_id = users.college_id group by college.name, college.slug order by college_score DESC, college.name',
+        function (err, data) {
+          if(err) {
+            res.status(500);
+            res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+          }else {
+            var schools = data.rows;
+
+            // cache for 1 minute
+            cache.set(cacheKey, schools, 60000)
+            res.render('schools-list',
+            {
+              schools: schools
+            });
+          }
+      });
+    }
   });
 
   router.get('/schools/:school', function(req, res) {
-    db.psqlQuery("select college.college_id, college.name, college.slug, COUNT(users.user_id) AS summoner_count, round(avg(users.rank)*count(users.rank)) as college_score from college inner join users on college.college_id = users.college_id where college.slug = '" + req.params.school + "' group by college.college_id, college.name, college.slug order by college_score DESC, college.name",
-      function(err, data) {
-        var school = data.rows[0];
-        if(school && !_.isEmpty(school)) {
-          db.psqlQuery(sql.getUsers(school.college_id), function(err, result) {
-            var summoners = [];
+    var cacheKey = "school:" + req.params.school;
+    var cachedSchool = cache.get(cacheKey);
 
-            if (err) {
-              console.log(err);
-            } else {
-              summoners = result.rows;
-            }
+    if(cachedSchool) {
+      res.render('school',
+      {
+        school: cachedSchool.school,
+        summoners: cachedSchool.summoners
+      });
+    }else {
+      var schoolInfo = {};
+      db.psqlQuery("select college.college_id, college.name, college.slug, COUNT(users.user_id) AS summoner_count, round(avg(users.rank)*count(users.rank)) as college_score from college inner join users on college.college_id = users.college_id where college.slug = '" + req.params.school + "' group by college.college_id, college.name, college.slug order by college_score DESC, college.name",
+        function(err, data) {
+          schoolInfo.school = data.rows[0];
+          if(schoolInfo.school && !_.isEmpty(schoolInfo.school)) {
+            db.psqlQuery(sql.getUsers(schoolInfo.school.college_id), function(err, result) {
+              if(err) {
+                console.log(err);
+                res.status(500);
+                res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+              } else {
+                schoolInfo.summoners = result.rows;
 
-            res.render('school',
-            {
-              school: school,
-              summoners: summoners
+                // cache for 5 minutes
+                cache.set(cacheKey, schoolInfo, 300000);
+                res.render('school',
+                {
+                  school: schoolInfo.school,
+                  summoners: (schoolInfo.summoners || [])
+                });
+              }
             });
-          });
-        }else if(_.isEmpty(school)) {
-          res.status(404);
-          res.render('404', {title: '404: School Not Found'});
-        }else {
-          res.status(500);
-          res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+          }else if(_.isEmpty(school)) {
+            res.status(404);
+            res.render('404', {title: '404: School Not Found'});
+          }else {
+            res.status(500);
+            res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
+          }
         }
-      }
-    );
+      );
+    }
   });
   
   return router;
