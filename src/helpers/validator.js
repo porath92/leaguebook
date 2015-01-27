@@ -1,7 +1,17 @@
-var _ = require('underscore');
-var RiotAPI = require('riot-api');
-var api = new RiotAPI(require('../config').configData.riotAPIKey);
-var getRank = require('./rank').getRank;
+var _ 							= require('underscore');
+var RiotAPIWrapper 	= require('irelia');
+var config 					= require('../config').configData;
+var getRank 				= require('./rank').getRank;
+var api 						= new RiotAPIWrapper({
+  key: config.riotAPIKey,
+  host: 'na.api.pvp.net',
+  path: '/api/lol',
+  secure: true,
+  debug: false
+});
+var leagueVersion 	= 'v2.5';
+var region 					= 'na';
+
 module.exports = {
 	validateEmail: function(email) {
 		var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([Ee][Dd][Uu])|(madglory.com)|(madgloryint.com)|(riotgames.com)$/;
@@ -25,16 +35,9 @@ module.exports = {
 				return callback(false, {summoner: 'Invalid Summoner'});
 			}
 
-			//Get rank
-			api.getLeagues(
-				{
-					'region': 'NA',
-					'queue'	: 'RANKED_SOLO_5x5',
-					'summonerId'	: response.id
-				},
-				function(data) {
-          var rank = getRank(data);
-
+			api.getLeagueBySummonerId(region, response.id, leagueVersion,
+	      function (err, res) {
+	      	var rank = getRank(res, response.id)
 					response.rank = rank.rank;
           response.tier = rank.tier;
 

@@ -9,7 +9,6 @@ var express             = require('express'),
     bodyParser          = require('body-parser'),
     morgan              = require('morgan'),
     methodOverride      = require('method-override'),
-    riotAPI             = require('./helpers/riot_api');
     // APPLICATION
     app                 = express();
 // Get view engine config

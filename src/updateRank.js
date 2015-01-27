@@ -1,12 +1,22 @@
-var configData = require('./config').configData;
-var eachSeries = require('async').eachSeries;
-var RiotAPI    = require('riot-api');
-var waterfall  = require('async').waterfall;
-var api        = new RiotAPI(configData.riotAPIKey);
-var pg         = require('pg');
-var db         = new require('./helpers/db');
-var sql        = require('./helpers/sql');
-var getRank    = require('./helpers/rank').getRank;
+var configData      = require('./config').configData;
+var eachSeries      = require('async').eachSeries;
+var Irelia  = require('irelia');
+var waterfall       = require('async').waterfall;
+var pg              = require('pg');
+var db              = new require('./helpers/db');
+var sql             = require('./helpers/sql');
+var getRank         = require('./helpers/rank').getRank;
+var riotAPI         = new Irelia({
+  key: configData.riotAPIKey,
+  host: 'na.api.pvp.net',
+  path: '/api/lol/',
+  secure: true,
+  debug: true
+});
+
+var QUEUE_TYPE = 'RANKED_SOLO_5X5'
+var leagueVersion = 'v2.5';
+var region = 'na';
 
 waterfall([
   function (callback) {
@@ -15,12 +25,10 @@ waterfall([
     eachSeries(users.rows,
       function (item, callback) {
         setTimeout(function () {
-          api.getLeagues({
-              region     : 'NA',
-              queue      : 'RANKED_SOLO_5x5',
-              summonerId : item.summoner_id
-            }, function (res) {
-              res = getRank(res);
+          riotAPI.getLeagueBySummonerId(region, item.summoner_id, leagueVersion,
+              function (err, res) {
+              // handles undefined res as 'unkown' rank
+              res = getRank(res, item.summoner_id);
               db.psqlQuery(sql.update('users', {
                   rank : res.rank,
                   tier : res.tier
@@ -30,8 +38,6 @@ waterfall([
                   if (err) {
                     console.log(err);
                   }
-
-                  console.log(res);
 
                   callback();
                 }
