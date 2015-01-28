@@ -78,7 +78,6 @@ module.exports = function(app) {
         if (!err) {
           res.redirect(config.baseURL + '/?r=2');
         } else {
-          console.log(err);
           res.status(500);
           res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
         }

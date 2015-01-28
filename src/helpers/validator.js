@@ -5,7 +5,7 @@ var getRank 				= require('./rank').getRank;
 var api 						= new RiotAPIWrapper({
   key: config.riotAPIKey,
   host: 'na.api.pvp.net',
-  path: '/api/lol',
+  path: '/api/lol/',
   secure: true,
   debug: false
 });
@@ -30,20 +30,28 @@ module.exports = {
 			return callback(false, {school: 'Invalid School'});
 		}
 
-		api.getSummoner({ summonerName: user }, function(response){
-			if(_.isUndefined(response.id)) {
-				return callback(false, {summoner: 'Invalid Summoner'});
+		api.getSummonerByName('na', user, function(err, response){
+			var summonerName = user.toLowerCase();
+			if(response[summonerName]) {
+				var summoner = response[summonerName];
+
+				if(_.isUndefined(summoner.id)) {
+					return callback(false, {summoner: 'Invalid Summoner'});
+				}
+
+				api.getLeagueBySummonerId(region, summoner.id, leagueVersion,
+		      function (err, res) {
+		      	var rank = getRank(res, summoner.id)
+						summoner.rank = rank.rank;
+	          summoner.tier = rank.tier;
+
+						return callback(summoner, {});
+					}
+				);
+			}else {
+				return callback(null, {});
 			}
 
-			api.getLeagueBySummonerId(region, response.id, leagueVersion,
-	      function (err, res) {
-	      	var rank = getRank(res, response.id)
-					response.rank = rank.rank;
-          response.tier = rank.tier;
-
-					return callback(response, {});
-				}
-			);
 		});
 	}
 }

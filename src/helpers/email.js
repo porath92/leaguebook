@@ -1,11 +1,12 @@
 var nodemailer = require('nodemailer');
+var config		 = require('../config').configData;
 module.exports = {
 	sendConfirmation: function(email, returnURL) {
 		var smtpTransport = nodemailer.createTransport("SMTP",{
 	    service: "Gmail",
 	    auth: {
         user: "leagueoflegendsbook@gmail.com",
-        pass: "MagicKittens"
+        pass: config.mail
 	    }
 		});
 
@@ -14,7 +15,7 @@ module.exports = {
 	    to: email,
 	    subject: "LeagueBook: Please confirm your email address.",
 	    text: "Please confirm that this is indeed you!",
-	    html: "Please confirm that this is indeed you! <a href='" + returnURL + "'>THIS LINK</a>"
+	    html: "Thank you for registering! Please confirm your summoner with <a href='" + returnURL + "'>this link.</a>"
 		}
 
 		smtpTransport.sendMail(mailOptions, function(error, response){
