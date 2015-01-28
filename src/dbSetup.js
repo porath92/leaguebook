@@ -27,6 +27,8 @@ CREATE TABLE users ( \
   rank            numeric, \
   profile_icon_id numeric, \
   confirmation_id uuid, \
+  is_alumni       boolean, \
+  last_updated    date DEFAULT now(), \
   create_date     date NOT NULL DEFAULT now() \
 ); \
 CREATE SEQUENCE college_id_seq \
