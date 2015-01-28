@@ -5,7 +5,7 @@ var csv        = require('csv');
 var csvPath    = __dirname + '/CSV_122014-600.csv';
 var waterfall  = require('async').waterfall;
 var eachSeries = require('async').eachSeries;
-var sql        = require('./sql');
+var sql        = require('./helpers/sql');
 
 waterfall([
   function (callback) {
