@@ -25,6 +25,7 @@ CREATE TABLE users ( \
   summoner_id     numeric, \
   tier            varchar(12), \
   rank            numeric, \
+  level           numeric, \
   profile_icon_id numeric, \
   confirmation_id uuid, \
   is_alumni       boolean, \
