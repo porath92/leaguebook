@@ -30,10 +30,14 @@ module.exports = {
 			return callback(false, {school: 'Invalid School'});
 		}
 
-		api.getSummonerByName('na', user, function(err, response){
-			var summonerName = user.toLowerCase();
-			if(response[summonerName]) {
-				var summoner = response[summonerName];
+		api.getSummonerByName('na', encodeURIComponent(user), function(err, response){
+			
+			// lower-case and remove spaces
+			var summonerKey = user.toLowerCase();
+			summonerKey = summonerKey.replace(/\s+/g, '');
+
+			if(response[summonerKey]) {
+				var summoner = response[summonerKey];
 
 				if(_.isUndefined(summoner.id)) {
 					return callback(false, {summoner: 'Invalid Summoner'});
