@@ -161,6 +161,13 @@ module.exports = {
     return query;
   },
 
+  updateUserRank: function (rank, tier, lastUpdated, summoner_id) {
+    return "UPDATE users SET last_updated = " + "'" + lastUpdated + "'" +
+      ", tier = " + "'" + tier.toLowerCase() + "'" +
+      ", rank = " + "'" + rank + "'" +
+      " WHERE summoner_id = " + summoner_id + ";";
+  },
+
   getColleges: function () {
     var query = 'SELECT distinct(college_id), * FROM college WHERE college_id IN (SELECT college_id FROM users WHERE college_id > 0);';
 

@@ -2,7 +2,7 @@
 <div class="jumbotron">
   <div class="container" id="home-text">
     <h1 id="intro-header">Welcome Summoner!</h1>
-    <p>Enroll now to see how you rank amongst players at your college and others in the country!</p>
+    <p>Enroll now to see how you rank amongst college players across the country!</p>
     <form method="post" action="/enroll" class="form-inline" role="form">
       <div class="form-group">
         <input type="text" name="summoner" placeholder="Summoner Name" class="form-control">
@@ -12,13 +12,16 @@
       </div>
       <div class="form-group">
         <input type="hidden" name="college_id" id="college_id">
+        <input type="hidden" name="college_slug" id="college_slug">
         <input type="text" name="school" id="school" placeholder="School" class="form-control">
       </div>
       <button type="submit" class="btn btn-success">Enroll Now!</button>
     </form>
-    <p><small>* NA region with .edu email addresses are allowed to enroll.</small></p>
-    <div class="alert {{alertType}}">  
-      {{alertMsg}} 
+    <p><small>* During beta only Summoners from NA with .edu email addresses are eligible to enroll.</small></p>
+    <div class="alert {{alertType}}">
+      {{#alertType}}
+        <img src="/images/mundo.png" class="mundo-icon" title="CUZ MUNDO SAID SO"/>&nbsp;{{alertMsg}}
+      {{/alertType}}
     </div>
   </div>
 </div>
@@ -63,6 +66,7 @@
             response( $.map( data, function( item ) {
               return {
                 id: item.college_id,
+                slug: item.slug,
                 label: item.name,
                 value: item.name
               }
@@ -73,6 +77,7 @@
       minLength: 2,
       select: function( event, ui ) {
         $('#college_id').val(ui.item.id);
+        $('#college_slug').val(ui.item.slug);
       }
     });
   });
