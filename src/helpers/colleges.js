@@ -45,6 +45,8 @@ module.exports = {
 
           callback(err, results);
         });
+      }else {
+        callback(err, null);
       }
     });
   },
