@@ -65,11 +65,20 @@ module.exports = {
             summoner.rank = r.rank;
             summoner.tier = r.tier;
 
-            db.psqlQuery(sql.updateUserRank(r.rank, r.tier, self.toISO(now), summoner.summoner_id));
+            db.psqlQuery(sql.updateUserRank(summoner, self.toISO(now)));
           }else {
+            console.log('unranked');
             if(err.statusCode === 404) {
               // unranked, need to update last_updated time for user
-              db.psqlQuery(sql.updateUserRank(0, 'UNRANKED', self.toISO(now), summoner.summoner_id));
+              api.getSummonerBySummonerId('na', summoner.summonerId, function(err, res) {
+                if(!err) {
+                  summoner.level  = res.summonerLevel;
+                  summoner.profile_icon_id = res.profileIconId;
+                  db.psqlQuery(sql.updateUserRank(summoner, self.toISO(now)));
+                } else {
+                  console.log("ERR (UpdateRank-Unranked): ", "API Limit Reached OR Riot API is down.");
+                }
+              });
             }else {
               console.log("ERR (UpdateRank): ", "API Limit Reached OR Riot API is down.");
             }
