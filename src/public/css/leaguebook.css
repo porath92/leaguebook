@@ -23,10 +23,37 @@ html,body{
     text-shadow: none;
   }
 
-.top-schools .top-summoners {
-  padding-left: 0;
-  margin-left: 0;
-  list-style: none;
+.top-schools {
+  text-align: center;
+}
+
+  .top-schools .school-list a,
+  .summoner-list a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .top-schools a:hover .thumbnail,
+  .summoner-list a:hover .thumbnail {
+    background-color: #efefef;
+  }
+
+.summoner-list h2 {
+  margin-top: -110px;
+  padding-bottom: 67px;
+  color: #fff;
+  text-align: center;
+}
+.summoner-list .caption {
+  text-align: center;
+}
+.summoner-list .profile-icon {
+  width: 100px;
+  border-radius: 50%;
+}
+.summoner-list .ranked-icon {
+  width: 50px;
 }
 
 .form-inline .form-group {
@@ -46,6 +73,7 @@ html,body{
 .profile-icon-large {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
 }
 
 .mundo-icon {

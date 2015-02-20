@@ -2,6 +2,12 @@ var db = require('./db');
 var sql = require('./sql');
 
 module.exports = {
+  getTop3: function(callback) {
+    db.psqlQuery('select college.name, college.slug, COUNT(users.user_id) AS summoner_count, round(avg(users.rank)*count(users.rank)) as college_score from college inner join users on college.college_id = users.college_id group by college.name, college.slug order by college_score DESC, college.name LIMIT 3', function(err, res) {
+      callback(err, res);
+    });
+  },
+
   getRandomColleges: function (callback) {
     var self = this;
     var collegeLimit = 6;

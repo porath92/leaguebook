@@ -161,11 +161,13 @@ module.exports = {
     return query;
   },
 
-  updateUserRank: function (rank, tier, lastUpdated, summoner_id) {
+  updateUser: function (summoner, lastUpdated) {
     return "UPDATE users SET last_updated = " + "'" + lastUpdated + "'" +
-      ", tier = " + "'" + tier.toLowerCase() + "'" +
-      ", rank = " + "'" + rank + "'" +
-      " WHERE summoner_id = " + summoner_id + ";";
+      ", tier = " + "'" + summoner.tier.toLowerCase() + "'" +
+      ", rank = " + "'" + summoner.rank + "'" +
+      ", level = " + "'" + summoner.level + "'" +
+      ", profile_icon_id = " + "'" + summoner.profile_icon_id + "'" +
+      " WHERE summoner_id = " + summoner.summoner_id + ";";
   },
 
   getColleges: function () {

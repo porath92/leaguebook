@@ -6,22 +6,21 @@
     # of Players: {{school.summoner_count}}
   </h3>
 
-  <table class="table table-condensed table-striped">
-    <thead>
-      <tr>
-        <td>League</td>
-        <td>Summoner Name</td>
-        <td>&nbsp;</td>
-      </tr>
-    </thead>
-    <tbody>
-      {{#summoners}}
-      <tr>
-        <td><img src="/images/rank_{{rank}}.png" class="profile-icon-large" title="{{tier}}"/></td>
-        <td><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon{{profile_icon_id}}.jpg" class="profile-icon-large" /> {{name}}</td>
-        <td style="text-align: center;"><a href="http://www.lolking.net/summoner/na/{{summoner_id}}" class="btn btn-info" target="_blank">View LoLKing Profile</a></td>
-      </tr>
-      {{/summoners}}
-    </tbody>
-  </table>
+  <div class="summoner-list row">
+
+  {{#summoners}}
+    <div class="col-md-3">
+      <a href="http://www.lolking.net/summoner/na/{{summoner_id}}">
+        <div class="thumbnail">
+          <img src="/images/rank_{{rank}}.png" title="{{tier}} - {{level}}"/>
+          {{#level}}<h2>{{level}}</h2>{{/level}}
+          <div class="caption">
+            <h4><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon{{profile_icon_id}}.jpg" class="profile-icon-large" /> {{name}}</h4>
+          </div>
+        </div>
+      </a>
+    </div>
+  {{/summoners}}
+
+  </div>
 </div>

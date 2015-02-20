@@ -26,26 +26,28 @@
   </div>
 </div>
 
-<div class="container">
+<div class="top-schools container">
   <!-- Example row of columns -->
   <div class="row">
+    <h2>Top Schools</h2>
+  </div>
+
+  <div class="school-list row">
     {{#colleges}}
-      <div class="top-schools col-md-4 min-med-height">
-        <h2>{{name}}</h2>
-        <ol class="top-summoners">
-          {{#users}}
-            <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon{{profile_icon_id}}.jpg" class="profile-icon" /> {{name}}</li>
-          {{/users}}
-        </ol>
-        <p><a class="btn btn-default" href="/schools/{{slug}}" role="button">View all &raquo;</a></p>
+      <div class="col-sm-6 col-md-4">
+        <a href="/schools/{{slug}}">
+          <div class="thumbnail">
+            <h4>{{name}}</h4>
+            <h2>Score: {{college_score}}</h2>
+          </div>
+        </a>
       </div>
     {{/colleges}}
   </div>
 
-  <hr>
-
-  <div class="row" style="text-align: center;">
-    <a href="/schools" class="btn btn-warning">Active School List</a>
+  <div class="row">
+    <h3>How does your school stack up against the rest of the country?</h3>
+    <p><a href="/schools" class="btn btn-warning">All Schools</a></p>
   </div>
 </div>
 

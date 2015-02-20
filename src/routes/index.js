@@ -51,29 +51,29 @@ module.exports = function(app) {
         break;
     }
 
-    var cacheKey = 'FrontPage:Random';
-    var cachedRandomColleges = cache.get(cacheKey);
+    var cacheKey = 'FrontPage:Top3';
+    var cachedTop3Colleges = cache.get(cacheKey);
 
-    if(cachedRandomColleges) {
+    if(cachedTop3Colleges) {
       res.render('index',
       {
         champion    : champion,
         baseUrl     : config.baseURL,
         alertType   : alertType,
         alertMsg    : alertMsg,
-        colleges    : cachedRandomColleges
+        colleges    : cachedTop3Colleges
       });
     }else {
-      collegeHelper.getRandomColleges(function (err, colleges) {
+      collegeHelper.getTop3(function (err, colleges) {
         // cache for 2 minutes
-        if(colleges) { cache.set(cacheKey, colleges, 120000); }
+        if(colleges) { cache.set(cacheKey, colleges.rows, 120000); }
         res.render('index',
         {
           champion    : champion,
           baseUrl     : config.baseURL,
           alertType   : alertType,
           alertMsg    : alertMsg,
-          colleges    : colleges
+            colleges    : colleges.rows
         });
       });
     }
