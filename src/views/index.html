@@ -29,15 +29,19 @@
 <div class="container">
   <!-- Example row of columns -->
   <div class="row">
+    <h2>Top Ranked Schools</h2>
     {{#colleges}}
-      <div class="top-schools col-md-4 min-med-height">
-        <h2>{{name}}</h2>
-        <ol class="top-summoners">
-          {{#users}}
-            <li><img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon{{profile_icon_id}}.jpg" class="profile-icon" /> {{name}}</li>
-          {{/users}}
-        </ol>
-        <p><a class="btn btn-default" href="/schools/{{slug}}" role="button">View all &raquo;</a></p>
+      <div class="top-schools col-sm-6 col-md-4">
+        <a href="/schools/{{slug}}">
+          <div class="thumbnail">
+            <img src="..." alt="...">
+            <div class="caption">
+              <h4>{{name}}</h4>
+              <p>{{college_score}}</p>
+              <p></a></p>
+            </div>
+          </div>
+        </a>
       </div>
     {{/colleges}}
   </div>
