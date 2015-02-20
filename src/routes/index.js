@@ -66,7 +66,7 @@ module.exports = function(app) {
     }else {
       collegeHelper.getTop3(function (err, colleges) {
         // cache for 2 minutes
-        if(colleges) { cache.set(cacheKey, colleges, 120000); }
+        if(colleges) { cache.set(cacheKey, colleges.rows, 120000); }
         res.render('index',
         {
           champion    : champion,
