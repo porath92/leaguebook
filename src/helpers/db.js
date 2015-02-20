@@ -13,14 +13,14 @@ module.exports = {
         if(!err) return false;
         done(client);
         console.log(err);
-        callback(err, null);
+        if(callback) callback(err, null);
         return true;
       };
 
       client.query(sql, function(err, res) {
         if(handleError(err)) return;
         done();
-        callback(err, res);
+        if(callback) callback(err, res);
       });
     });
   }
