@@ -23,11 +23,19 @@ html,body{
     text-shadow: none;
   }
 
-.top-schools .top-summoners {
-  padding-left: 0;
-  margin-left: 0;
-  list-style: none;
+.top-schools {
+  text-align: center;
 }
+
+  .top-schools .school-list a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .top-schools a:hover .thumbnail {
+    background-color: #efefef;
+  }
 
 .form-inline .form-group {
   margin-right: 5px;
