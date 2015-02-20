@@ -65,21 +65,16 @@ module.exports = function(app) {
       });
     }else {
       collegeHelper.getRandomColleges(function (err, colleges) {
-        if(colleges) {
-          // cache for 2 minutes
-          cache.set(cacheKey, colleges, 120000);
-          res.render('index',
-          {
-            champion    : champion,
-            baseUrl     : config.baseURL,
-            alertType   : alertType,
-            alertMsg    : alertMsg,
-            colleges    : colleges
-          });
-        }else {
-          res.status(500);
-          res.render('500', {title:'500: Internal Server Error', error: (err || "DB ERROR")});
-        }
+        // cache for 2 minutes
+        if(colleges) { cache.set(cacheKey, colleges, 120000); }
+        res.render('index',
+        {
+          champion    : champion,
+          baseUrl     : config.baseURL,
+          alertType   : alertType,
+          alertMsg    : alertMsg,
+          colleges    : colleges
+        });
       });
     }
   });

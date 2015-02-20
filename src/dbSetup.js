@@ -2,7 +2,7 @@ var pg         = require('pg');
 var configData = require('./config').configData;
 var psql       = new pg.Client(configData.dbURL);
 
-psql.connect();
+psql.connect(); 
 
 psql.query("\
 DROP TABLE IF EXISTS users; \

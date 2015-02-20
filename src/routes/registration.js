@@ -7,15 +7,19 @@ module.exports = function(app) {
       router    = express.Router(),
       config    = require('../config').configData,
       db        = require('../helpers/db'),
+      cache   = require('basic-cache'),
       sql       = require('../helpers/sql');
 
   router.post('/enroll', function(req, res) {
     var user          = req.body.summoner,
         email         = req.body.email,
         college_id    = req.body.college_id,
+        slug          = req.body.college_slug,
         registeredURL = config.baseURL;
 
     validator.validateRegistration(user, email, college_id, function(summoner, errors){
+      var cacheKey = "school:" + slug;
+
       if (errors.school) {
         res.redirect(registeredURL + '/?r=4');
         return;
@@ -58,6 +62,7 @@ module.exports = function(app) {
               emailer.sendConfirmation(email, returnURL);
             }
           );
+          cache.clear(cacheKey);
           registeredURL = registeredURL + '/?r=1';
           res.redirect(registeredURL);
         }else {
@@ -76,6 +81,7 @@ module.exports = function(app) {
         'confirmation_id' : req.params.confirmId
       }), function (err, result) {
         if (!err) {
+          
           res.redirect(config.baseURL + '/?r=2');
         } else {
           res.status(500);

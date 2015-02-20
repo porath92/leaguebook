@@ -3,6 +3,7 @@ module.exports = function(app) {
       pg      = require('pg'),
       db      = require('../helpers/db'),
       sql     = require('../helpers/sql'),
+      rHelper = require('../helpers/rank'),
       express = require('express'),
       cache   = require('basic-cache'),
       router  = express.Router();
@@ -37,6 +38,7 @@ module.exports = function(app) {
   });
 
   router.get('/schools/:school', function(req, res) {
+    var schoolInfo = {};
     var cacheKey = "school:" + req.params.school;
     var cachedSchool = cache.get(cacheKey);
 
@@ -47,7 +49,6 @@ module.exports = function(app) {
         summoners: cachedSchool.summoners
       });
     }else {
-      var schoolInfo = {};
       db.psqlQuery("select college.college_id, college.name, college.slug, COUNT(users.user_id) AS summoner_count, round(avg(users.rank)*count(users.rank)) as college_score from college inner join users on college.college_id = users.college_id where college.slug = '" + req.params.school + "' group by college.college_id, college.name, college.slug order by college_score DESC, college.name",
         function(err, data) {
           schoolInfo.school = data.rows[0];
@@ -60,6 +61,11 @@ module.exports = function(app) {
               } else {
                 schoolInfo.summoners = result.rows;
 
+                //update any necessary ranks
+                _.each(schoolInfo.summoners, function(summoner) {
+                  rHelper.updateRank(summoner, schoolInfo);
+                }, this);
+                
                 // cache for 5 minutes
                 cache.set(cacheKey, schoolInfo, 300000);
                 res.render('school',

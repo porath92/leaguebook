@@ -48,6 +48,11 @@ html,body{
   height: 40px;
 }
 
+.mundo-icon {
+  width: 90px;
+  height: 80px;
+}
+
 #home-text {
   padding-top: 100px;
   padding-bottom: 50px;
